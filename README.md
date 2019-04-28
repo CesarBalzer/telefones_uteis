@@ -154,4 +154,6 @@ Crie atalhos dos números em sua tela inicial para agilizar chamadas de emergên
 
     * Uma confirmação será solicitada para completar a criação do atalho.
 
+## Licensa
 
+The MIT License (MIT). Leia o arquivo [LICENSE](LICENSE).

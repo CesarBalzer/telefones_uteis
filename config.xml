@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="br.com.telefones_uteis" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Telefones Úteis</name>
+    <description>
+        Lista de telefones de emergência e outros números úteis.
+    </description>
+    <author email="cesarebalzer@gmail.com" href="http://kdsistemasweb.com.br">
+        Cesar E. Balzer
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <platform name="android">
+        <allow-intent href="market:*" />
+    </platform>
+    <platform name="android">
+        <icon density="ldpi" src="res/icon/android/icon-ldpi.png" />
+        <icon density="mdpi" src="res/icon/android/icon-mdpi.png" />
+        <icon density="hdpi" src="res/icon/android/icon-hdpi.png" />
+        <icon density="xhdpi" src="res/icon/android/icon-xhdpi.png" />
+        <icon density="xxhdpi" src="res/icon/android/icon-xxhdpi.png" />
+        <icon density="xxxhdpi" src="res/icon/android/icon-xxxhdpi.png" />
+        <splash density="land-hdpi" src="res/screen/android/screen-hdpi-landscape.png" />
+        <splash density="land-ldpi" src="res/screen/android/screen-ldpi-landscape.png" />
+        <splash density="land-mdpi" src="res/screen/android/screen-mdpi-landscape.png" />
+        <splash density="land-xhdpi" src="res/screen/android/screen-xhdpi-landscape.png" />
+        <splash density="port-hdpi" src="res/screen/android/screen-hdpi-portrait.png" />
+        <splash density="port-ldpi" src="res/screen/android/screen-ldpi-portrait.png" />
+        <splash density="port-mdpi" src="res/screen/android/screen-mdpi-portrait.png" />
+        <splash density="port-xhdpi" src="res/screen/android/screen-xhdpi-portrait.png" />
+    </platform>
+    <preference name="AutoHideSplashScreen" value="false" />
+    <platform name="ios">
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+    </platform>
+    <engine name="android" spec="^6.3.0" />
+    <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
+    <plugin name="call-number" spec="git+https://github.com/Rohfosho/CordovaCallNumberPlugin.git" />
+    <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
+    <plugin name="cordova-plugin-shortcuts-android" spec="^0.1.1" />
+    <plugin name="cordova-plugin-file" spec="^6.0.1" />
+</widget>

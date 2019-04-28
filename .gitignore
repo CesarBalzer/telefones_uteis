@@ -1,0 +1,7 @@
+/platforms/
+/node_modules/
+/hooks/
+/telefones_uteis.keystore
+/nbproject/
+/.DS_Store
+/.npmignore

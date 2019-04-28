@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="theme-color" content="#009688">
+        <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap:">
+        <title>Telefones Úteis</title>
+        <link rel="stylesheet" href="css/framework7.bundle.css">
+        <link rel="stylesheet" href="css/icons.css">
+        <link rel="stylesheet" href="css/app.css">
+        <link rel="apple-touch-icon" href="img/logo-icon-square.png">
+        <link rel="icon" href="img/logo-icon.png">
+    </head>
+    <body class="color-theme-teal">
+        <div id="app">
+            <div class="statusbar"></div>
+            <div class="panel panel-left panel-cover">
+                <div class="page">
+                    <div class="page-content">
+                        <div class="user_thumb">
+                            <img id="img_profile" src="./img/screen-menu.png" alt="" title="" /> 
+                        </div>
+                        <div class="block-title">Menu</div>
+                        <div class="list">
+                            <ul>
+                                <li>
+                                    <a href="/" class="item-link item-content panel-close">
+                                        <div class="item-media"><i class="material-icons">home</i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">Home</div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/sobre/" class="item-link item-content panel-close">
+                                        <div class="item-media"><i class="material-icons">info</i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">Sobre</div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/politica/" class="item-link item-content panel-close">
+                                        <div class="item-media"><i class="material-icons">visibility</i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">Privacidade</div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/termos/" class="item-link item-content panel-close">
+                                        <div class="item-media"><i class="material-icons">list_alt</i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">Termos de uso</div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/manual/" class="item-link item-content panel-close">
+                                        <div class="item-media"><i class="material-icons">chrome_reader_mode</i></div>
+                                        <div class="item-inner">
+                                            <div class="item-title">Instruções</div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="view view-main view-init safe-areas">
+
+            </div>
+        </div>
+        <script src="cordova.js" type="text/javascript"></script>
+        <script src="js/framework7.bundle.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script src="js/db.js"></script>
+        <script src="js/routes.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/fone.js"></script>
+    </body>
+</html>

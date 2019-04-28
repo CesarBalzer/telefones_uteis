@@ -1,6 +1,8 @@
-
 # Telefones Úteis
 
+<p align="center">
+  <img src="http://kdsistemasweb.com.br/telefonesuteis/img/logo.png" alt="Logo" width="200px" height="200px;"/>
+</p>
 
 ## Telefones Úteis Emergência V1.0.0
 

@@ -36,7 +36,7 @@ Crie atalhos dos números em sua tela inicial para agilizar chamadas de emergên
 
 ### Código aberto à comunidade dev Cordova no telegram
 
-- [Grupo Cordova Telegram](https://t.me/devcordova)
+- [Link para o grupo no Telegram](https://t.me/devcordova)
 
 ## Banco de dados
 

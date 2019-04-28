@@ -16,15 +16,22 @@ Crie atalhos dos números em sua tela inicial para agilizar chamadas de emergên
 
 ## Tecnologias de código aberto utilizadas:
 
+
+### Apache Cordova
 - [Site Oficial Apache Cordova](https://cordova.apache.org)
 
 - [Documentação Oficial Apache Cordova](https://cordova.apache.org/docs/en/latest/)
 
+
+### Framework7
 - [Site Oficial Framework7 v.4.0.0](http://framework7.io)
 
 - [Documentação Oficial Framework7 v.4.0.0](http://framework7.io/docs)
 
-- Plugin Call Number desenvolvido por [Rofosho](https://github.com/Rohfosho/CordovaCallNumberPlugin.git)
+
+### Plugin Call Number
+
+- Desenvolvido por [Rofosho](https://github.com/Rohfosho/CordovaCallNumberPlugin.git)
 
 
 Código aberto à comunidade dev Cordova no telegram [https://t.me/devcordova](https://t.me/devcordova)

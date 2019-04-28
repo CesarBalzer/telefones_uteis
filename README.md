@@ -34,7 +34,9 @@ Crie atalhos dos números em sua tela inicial para agilizar chamadas de emergên
 - Desenvolvido por [Rofosho](https://github.com/Rohfosho/CordovaCallNumberPlugin.git)
 
 
-Código aberto à comunidade dev Cordova no telegram [https://t.me/devcordova](https://t.me/devcordova)
+### Código aberto à comunidade dev Cordova no telegram
+
+- [Grupo Cordova Telegram](https://t.me/devcordova)
 
 ## Banco de dados
 

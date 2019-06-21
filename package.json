@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "call-number": "git+https://github.com/Rohfosho/CordovaCallNumberPlugin.git",
-    "cordova-android": "^6.3.0",
+    "cordova-android": "^6.4.0",
     "cordova-plugin-file": "^6.0.1",
     "cordova-plugin-shortcuts-android": "^0.1.1",
     "cordova-plugin-splashscreen": "^5.0.2",

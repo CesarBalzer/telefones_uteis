@@ -47,7 +47,7 @@ var routes = [
         name: 'sobre',
         options: {
             context: {
-                versao: 'v1.0.0',
+                versao: 'v1.0.1',
             },
         }
     },

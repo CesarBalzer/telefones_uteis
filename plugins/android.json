@@ -7,10 +7,13 @@
     "files": {}
   },
   "installed_plugins": {
-    "cordova-plugin-whitelist": {
+    "call-number": {
       "PACKAGE_NAME": "br.com.telefones_uteis"
     },
-    "call-number": {
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "br.com.telefones_uteis"
+    },
+    "cordova-plugin-shortcuts-android": {
       "PACKAGE_NAME": "br.com.telefones_uteis"
     },
     "cordova-plugin-splashscreen": {
@@ -19,10 +22,7 @@
     "cordova-plugin-statusbar": {
       "PACKAGE_NAME": "br.com.telefones_uteis"
     },
-    "cordova-plugin-shortcuts-android": {
-      "PACKAGE_NAME": "br.com.telefones_uteis"
-    },
-    "cordova-plugin-file": {
+    "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "br.com.telefones_uteis"
     }
   },

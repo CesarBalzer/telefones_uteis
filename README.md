@@ -4,7 +4,7 @@
   <img src="http://kdsistemasweb.com.br/telefonesuteis/img/logo.png" alt="Logo" width="200px" height="200px;"/>
 </p>
 
-## Telefones Úteis Emergência V1.0.0
+## Telefones Úteis Emergência V1.0.1
 
 O aplicativo é uma ferramenta para acesso rápido aos serviços de emergência e outros números de utilidade pública, números particulares e outros que desejar.
 
@@ -162,3 +162,7 @@ Crie atalhos dos números em sua tela inicial para agilizar chamadas de emergên
 ## Licensa MIT
 
 The MIT License (MIT). Leia o arquivo [LICENSE](LICENSE).
+
+##  Changelog
+ 10/10/2019
+ - Upgrade da versão do SDK da 26 para 29

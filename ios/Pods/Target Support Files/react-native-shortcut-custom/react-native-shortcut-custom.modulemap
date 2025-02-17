@@ -1,0 +1,6 @@
+module react_native_shortcut_custom {
+  umbrella header "react-native-shortcut-custom-umbrella.h"
+
+  export *
+  module * { export * }
+}

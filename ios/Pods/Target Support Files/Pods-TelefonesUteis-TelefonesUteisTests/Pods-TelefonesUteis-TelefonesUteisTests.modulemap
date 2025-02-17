@@ -1,0 +1,6 @@
+module Pods_TelefonesUteis_TelefonesUteisTests {
+  umbrella header "Pods-TelefonesUteis-TelefonesUteisTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

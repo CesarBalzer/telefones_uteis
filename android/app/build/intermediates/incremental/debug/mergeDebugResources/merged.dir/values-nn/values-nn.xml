@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ampm_description">Vel am/pm</string>
+    <string name="date_description">Vel dato</string>
+    <string name="day_description">Vel dag</string>
+    <string name="hour_description">Vel time</string>
+    <string name="hour_tag">Time</string>
+    <string name="minutes_description">Vel minutt</string>
+    <string name="minutes_tag">Minutt</string>
+    <string name="month_description">Vel månad</string>
+    <string name="overlay">Datoveljar</string>
+    <string name="time_tag">Tida er</string>
+    <string name="year_description">Vel år</string>
+</resources>

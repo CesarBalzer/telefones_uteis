@@ -1,0 +1,21 @@
+{
+  "name": "react-native-shortcuts-launcher",
+  "version": "0.1.0",
+  "summary": "test",
+  "homepage": "https://github.com/CesarBalzer/react-native-shortcuts-launcher#readme",
+  "license": "MIT",
+  "authors": "Cesar Balzer <cesarebalzer@gmail.com> (https://github.com/CesarBalzer/react-native-shortcuts-launcher)",
+  "platforms": {
+    "ios": "11.0"
+  },
+  "source": {
+    "git": "https://github.com/CesarBalzer/react-native-shortcuts-launcher.git",
+    "tag": "0.1.0"
+  },
+  "source_files": "ios/**/*.{h,m,mm}",
+  "dependencies": {
+    "React-Core": [
+
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ampm_description">בחירה ב־AM/PM</string>
+    <string name="date_description">בחירת תאריך</string>
+    <string name="day_description">בחירת יום</string>
+    <string name="hour_description">בחירת שעה</string>
+    <string name="hour_tag">שעה :</string>
+    <string name="minutes_description">בחירת דקות</string>
+    <string name="minutes_tag">דקות </string>
+    <string name="month_description">בחירת חודש</string>
+    <string name="overlay">בוחר תאריכים צף</string>
+    <string name="time_tag">השעה היא</string>
+    <string name="year_description">בחירת שנה</string>
+</resources>

@@ -1,0 +1,30 @@
+{
+  "name": "react-native-blur",
+  "version": "4.4.0",
+  "summary": "React Native Blur component",
+  "homepage": "https://github.com/react-native-community/react-native-blur",
+  "license": "MIT",
+  "authors": "Alexey Kureev <kureev-mail@ya.ru> (https://github.com/Kureev)",
+  "platforms": {
+    "ios": "10.0",
+    "tvos": "11.0",
+    "visionos": "1.0"
+  },
+  "source": {
+    "git": "https://github.com/react-native-community/react-native-blur.git"
+  },
+  "source_files": "ios/**/*.{h,m,mm}",
+  "compiler_flags": "-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -Wno-comma -Wno-shorten-64-to-32",
+  "dependencies": {
+    "React-Core": [
+
+    ],
+    "RCT-Folly": [
+      "2021.07.22.00"
+    ]
+  },
+  "pod_target_xcconfig": {
+    "HEADER_SEARCH_PATHS": "\"$(PODS_ROOT)/boost\"",
+    "CLANG_CXX_LANGUAGE_STANDARD": "c++17"
+  }
+}

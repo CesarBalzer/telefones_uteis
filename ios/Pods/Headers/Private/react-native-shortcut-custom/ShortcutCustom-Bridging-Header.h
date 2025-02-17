@@ -1,0 +1,1 @@
+../../../../../node_modules/react-native-shortcut-custom/ios/ShortcutCustom-Bridging-Header.h

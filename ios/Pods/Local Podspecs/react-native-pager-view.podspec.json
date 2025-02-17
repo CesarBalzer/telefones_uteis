@@ -1,0 +1,29 @@
+{
+  "name": "react-native-pager-view",
+  "version": "6.2.3",
+  "summary": "React Native wrapper for Android and iOS ViewPager",
+  "homepage": "https://github.com/callstack/react-native-pager-view#readme",
+  "license": "MIT",
+  "authors": "troZee <hello@callstack.com> (https://github.com/callstack)",
+  "platforms": {
+    "ios": "10.0"
+  },
+  "source": {
+    "git": "https://github.com/callstack/react-native-pager-view.git",
+    "tag": "6.2.3"
+  },
+  "source_files": "ios/**/*.{h,m,mm}",
+  "compiler_flags": "-DFOLLY_NO_CONFIG -DFOLLY_MOBILE=1 -DFOLLY_USE_LIBCPP=1 -Wno-comma -Wno-shorten-64-to-32",
+  "dependencies": {
+    "React-Core": [
+
+    ],
+    "RCT-Folly": [
+      "2021.07.22.00"
+    ]
+  },
+  "pod_target_xcconfig": {
+    "HEADER_SEARCH_PATHS": "\"$(PODS_ROOT)/boost\"",
+    "CLANG_CXX_LANGUAGE_STANDARD": "c++17"
+  }
+}

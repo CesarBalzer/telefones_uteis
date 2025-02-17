@@ -1,0 +1,74 @@
+[
+    {
+        "merged": "br.com.telefones_uteis.app-merged_res-42:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "br.com.telefones_uteis.app-main-44:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "br.com.telefones_uteis.app-merged_res-42:/drawable_rn_edit_text_material.xml.flat",
+        "source": "br.com.telefones_uteis.app-main-44:/drawable/rn_edit_text_material.xml"
+    },
+    {
+        "merged": "br.com.telefones_uteis.app-merged_res-42:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "br.com.telefones_uteis.app-main-44:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "br.com.telefones_uteis.app-merged_res-42:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "br.com.telefones_uteis.app-main-44:/mipmap-xxxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "br.com.telefones_uteis.app-merged_res-42:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "br.com.telefones_uteis.app-main-44:/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "br.com.telefones_uteis.app-merged_res-42:/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "br.com.telefones_uteis.app-main-44:/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "br.com.telefones_uteis.app-merged_res-42:/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "br.com.telefones_uteis.app-main-44:/mipmap-xhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "br.com.telefones_uteis.app-merged_res-42:/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "br.com.telefones_uteis.app-main-44:/mipmap-xxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "br.com.telefones_uteis.app-merged_res-42:/mipmap-mdpi_ic_launcher_foreground.png.flat",
+        "source": "br.com.telefones_uteis.app-main-44:/mipmap-mdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "br.com.telefones_uteis.app-merged_res-42:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "br.com.telefones_uteis.app-main-44:/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "br.com.telefones_uteis.app-merged_res-42:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "br.com.telefones_uteis.app-main-44:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "br.com.telefones_uteis.app-merged_res-42:/mipmap-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "br.com.telefones_uteis.app-main-44:/mipmap-xxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "br.com.telefones_uteis.app-merged_res-42:/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "br.com.telefones_uteis.app-main-44:/mipmap-mdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "br.com.telefones_uteis.app-merged_res-42:/mipmap-xhdpi_ic_launcher_foreground.png.flat",
+        "source": "br.com.telefones_uteis.app-main-44:/mipmap-xhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "br.com.telefones_uteis.app-merged_res-42:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "br.com.telefones_uteis.app-main-44:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "br.com.telefones_uteis.app-merged_res-42:/mipmap-xxxhdpi_ic_launcher_foreground.png.flat",
+        "source": "br.com.telefones_uteis.app-main-44:/mipmap-xxxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "br.com.telefones_uteis.app-merged_res-42:/mipmap-hdpi_ic_launcher_foreground.png.flat",
+        "source": "br.com.telefones_uteis.app-main-44:/mipmap-hdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "br.com.telefones_uteis.app-merged_res-42:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "br.com.telefones_uteis.app-main-44:/mipmap-mdpi/ic_launcher.png"
+    }
+]

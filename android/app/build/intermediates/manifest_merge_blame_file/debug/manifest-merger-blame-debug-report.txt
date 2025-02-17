@@ -1,0 +1,186 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="br.com.telefones_uteis"
+4    android:versionCode="4"
+5    android:versionName="2.0.1" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+9        android:targetSdkVersion="33" />
+10
+11    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+11-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/debug/AndroidManifest.xml:5:5-77
+11-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/debug/AndroidManifest.xml:5:22-75
+12    <uses-permission android:name="android.permission.INTERNET" />
+12-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:3:3-65
+12-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:3:20-62
+13    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+13-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:4:3-71
+13-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:4:20-68
+14    <uses-permission android:name="android.permission.CALL_PHONE" />
+14-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:5:3-67
+14-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:5:20-64
+15    <uses-permission android:name="android.permission.READ_CONTACTS" />
+15-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:6:3-70
+15-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:6:20-67
+16    <uses-permission android:name="android.permission.INSTALL_SHORTCUT" />
+16-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:7:3-73
+16-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:7:20-70
+17    <uses-permission android:name="android.permission.READ_PROFILE" />
+17-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:8:3-69
+17-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:8:20-66
+18    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+18-->[com.facebook.flipper:flipper:0.125.0] /Users/cesarbalzer/.gradle/caches/transforms-3/4f08ffd0dd0d156ebbbd371b7bce1bc5/transformed/jetified-flipper-0.125.0/AndroidManifest.xml:16:5-76
+18-->[com.facebook.flipper:flipper:0.125.0] /Users/cesarbalzer/.gradle/caches/transforms-3/4f08ffd0dd0d156ebbbd371b7bce1bc5/transformed/jetified-flipper-0.125.0/AndroidManifest.xml:16:22-73
+19    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+19-->[:react-native-shortcuts-launcher] /Users/cesarbalzer/Developer/react-native-shortcuts-launcher/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:5-80
+19-->[:react-native-shortcuts-launcher] /Users/cesarbalzer/Developer/react-native-shortcuts-launcher/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:10:22-77
+20
+21    <queries>
+21-->[:react-native-shortcuts-launcher] /Users/cesarbalzer/Developer/react-native-shortcuts-launcher/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:12:5-18:15
+22        <intent>
+22-->[:react-native-shortcuts-launcher] /Users/cesarbalzer/Developer/react-native-shortcuts-launcher/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:13:9-17:18
+23            <category android:name="android.intent.category.ACTION_CREATE_SHORTCUT" />
+23-->[:react-native-shortcuts-launcher] /Users/cesarbalzer/Developer/react-native-shortcuts-launcher/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:14:13-87
+23-->[:react-native-shortcuts-launcher] /Users/cesarbalzer/Developer/react-native-shortcuts-launcher/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:14:23-84
+24
+25            <data android:scheme="https" />
+25-->[:react-native-shortcuts-launcher] /Users/cesarbalzer/Developer/react-native-shortcuts-launcher/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:16:13-44
+25-->[:react-native-shortcuts-launcher] /Users/cesarbalzer/Developer/react-native-shortcuts-launcher/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:16:19-41
+26        </intent>
+27    </queries>
+28
+29    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+29-->[:react-native-fs] /Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/node_modules/react-native-fs/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:7:5-81
+29-->[:react-native-fs] /Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/node_modules/react-native-fs/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:7:22-78
+30    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+30-->[:react-native-shortcut-custom] /Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/node_modules/react-native-shortcut-custom/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:14:5-88
+30-->[:react-native-shortcut-custom] /Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/node_modules/react-native-shortcut-custom/android/build/intermediates/merged_manifest/debug/AndroidManifest.xml:14:22-85
+31
+32    <permission
+32-->[androidx.core:core:1.10.0] /Users/cesarbalzer/.gradle/caches/transforms-3/ff888769f785509fc6c098dc71f15004/transformed/core-1.10.0/AndroidManifest.xml:22:5-24:47
+33        android:name="br.com.telefones_uteis.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+33-->[androidx.core:core:1.10.0] /Users/cesarbalzer/.gradle/caches/transforms-3/ff888769f785509fc6c098dc71f15004/transformed/core-1.10.0/AndroidManifest.xml:23:9-81
+34        android:protectionLevel="signature" />
+34-->[androidx.core:core:1.10.0] /Users/cesarbalzer/.gradle/caches/transforms-3/ff888769f785509fc6c098dc71f15004/transformed/core-1.10.0/AndroidManifest.xml:24:9-44
+35
+36    <uses-permission android:name="br.com.telefones_uteis.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+36-->[androidx.core:core:1.10.0] /Users/cesarbalzer/.gradle/caches/transforms-3/ff888769f785509fc6c098dc71f15004/transformed/core-1.10.0/AndroidManifest.xml:26:5-97
+36-->[androidx.core:core:1.10.0] /Users/cesarbalzer/.gradle/caches/transforms-3/ff888769f785509fc6c098dc71f15004/transformed/core-1.10.0/AndroidManifest.xml:26:22-94
+37
+38    <application
+38-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:10:3-29:17
+39        android:name="br.com.telefones_uteis.MainApplication"
+39-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:11:5-36
+40        android:allowBackup="false"
+40-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:15:5-32
+41        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+41-->[androidx.core:core:1.10.0] /Users/cesarbalzer/.gradle/caches/transforms-3/ff888769f785509fc6c098dc71f15004/transformed/core-1.10.0/AndroidManifest.xml:28:18-86
+42        android:debuggable="true"
+43        android:extractNativeLibs="false"
+44        android:icon="@mipmap/ic_launcher"
+44-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:13:5-39
+45        android:label="@string/app_name"
+45-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:12:5-37
+46        android:roundIcon="@mipmap/ic_launcher_round"
+46-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:14:5-50
+47        android:theme="@style/AppTheme"
+47-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:16:5-36
+48        android:usesCleartextTraffic="true" >
+48-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/debug/AndroidManifest.xml:8:9-44
+49        <activity
+49-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/debug/AndroidManifest.xml:11:9-111
+50            android:name="com.facebook.react.devsupport.DevSettingsActivity"
+50-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/debug/AndroidManifest.xml:11:19-83
+51            android:exported="false" />
+51-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/debug/AndroidManifest.xml:11:84-108
+52        <activity
+52-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:17:5-28:16
+53            android:name="br.com.telefones_uteis.MainActivity"
+53-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:18:7-35
+54            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+54-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:20:7-116
+55            android:exported="true"
+55-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:23:7-30
+56            android:label="@string/app_name"
+56-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:19:7-39
+57            android:launchMode="singleTask"
+57-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:21:7-38
+58            android:windowSoftInputMode="adjustPan" >
+58-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:22:7-46
+59            <intent-filter>
+59-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:24:7-27:23
+60                <action android:name="android.intent.action.MAIN" />
+60-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:25:9-61
+60-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:25:17-58
+61
+62                <category android:name="android.intent.category.LAUNCHER" />
+62-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:26:9-69
+62-->/Users/cesarbalzer/Developer/react-native-shortcuts-launcher/example/android/app/src/main/AndroidManifest.xml:26:19-66
+63            </intent-filter>
+64        </activity>
+65        <activity
+65-->[com.google.android.gms:play-services-auth:21.0.0] /Users/cesarbalzer/.gradle/caches/transforms-3/9adb45f0ef633b7b7c3bf37fa25461ca/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:23:9-27:75
+66            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+66-->[com.google.android.gms:play-services-auth:21.0.0] /Users/cesarbalzer/.gradle/caches/transforms-3/9adb45f0ef633b7b7c3bf37fa25461ca/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:24:13-93
+67            android:excludeFromRecents="true"
+67-->[com.google.android.gms:play-services-auth:21.0.0] /Users/cesarbalzer/.gradle/caches/transforms-3/9adb45f0ef633b7b7c3bf37fa25461ca/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:25:13-46
+68            android:exported="false"
+68-->[com.google.android.gms:play-services-auth:21.0.0] /Users/cesarbalzer/.gradle/caches/transforms-3/9adb45f0ef633b7b7c3bf37fa25461ca/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:26:13-37
+69            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+69-->[com.google.android.gms:play-services-auth:21.0.0] /Users/cesarbalzer/.gradle/caches/transforms-3/9adb45f0ef633b7b7c3bf37fa25461ca/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:27:13-72
+70        <!--
+71            Service handling Google Sign-In user revocation. For apps that do not integrate with
+72            Google Sign-In, this service will never be started.
+73        -->
+74        <service
+74-->[com.google.android.gms:play-services-auth:21.0.0] /Users/cesarbalzer/.gradle/caches/transforms-3/9adb45f0ef633b7b7c3bf37fa25461ca/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:33:9-37:51
+75            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+75-->[com.google.android.gms:play-services-auth:21.0.0] /Users/cesarbalzer/.gradle/caches/transforms-3/9adb45f0ef633b7b7c3bf37fa25461ca/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:34:13-89
+76            android:exported="true"
+76-->[com.google.android.gms:play-services-auth:21.0.0] /Users/cesarbalzer/.gradle/caches/transforms-3/9adb45f0ef633b7b7c3bf37fa25461ca/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:35:13-36
+77            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+77-->[com.google.android.gms:play-services-auth:21.0.0] /Users/cesarbalzer/.gradle/caches/transforms-3/9adb45f0ef633b7b7c3bf37fa25461ca/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:36:13-107
+78            android:visibleToInstantApps="true" />
+78-->[com.google.android.gms:play-services-auth:21.0.0] /Users/cesarbalzer/.gradle/caches/transforms-3/9adb45f0ef633b7b7c3bf37fa25461ca/transformed/jetified-play-services-auth-21.0.0/AndroidManifest.xml:37:13-48
+79
+80        <activity
+80-->[com.google.android.gms:play-services-base:18.0.1] /Users/cesarbalzer/.gradle/caches/transforms-3/c477b78fe639fe16e49b5ecf6bc10aca/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
+81            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+81-->[com.google.android.gms:play-services-base:18.0.1] /Users/cesarbalzer/.gradle/caches/transforms-3/c477b78fe639fe16e49b5ecf6bc10aca/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:19-85
+82            android:exported="false"
+82-->[com.google.android.gms:play-services-base:18.0.1] /Users/cesarbalzer/.gradle/caches/transforms-3/c477b78fe639fe16e49b5ecf6bc10aca/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:22:19-43
+83            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+83-->[com.google.android.gms:play-services-base:18.0.1] /Users/cesarbalzer/.gradle/caches/transforms-3/c477b78fe639fe16e49b5ecf6bc10aca/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:21:19-78
+84
+85        <meta-data
+85-->[com.google.android.gms:play-services-basement:18.2.0] /Users/cesarbalzer/.gradle/caches/transforms-3/19f779f927fe862c5f497cc98f254aa4/transformed/jetified-play-services-basement-18.2.0/AndroidManifest.xml:21:9-23:69
+86            android:name="com.google.android.gms.version"
+86-->[com.google.android.gms:play-services-basement:18.2.0] /Users/cesarbalzer/.gradle/caches/transforms-3/19f779f927fe862c5f497cc98f254aa4/transformed/jetified-play-services-basement-18.2.0/AndroidManifest.xml:22:13-58
+87            android:value="@integer/google_play_services_version" />
+87-->[com.google.android.gms:play-services-basement:18.2.0] /Users/cesarbalzer/.gradle/caches/transforms-3/19f779f927fe862c5f497cc98f254aa4/transformed/jetified-play-services-basement-18.2.0/AndroidManifest.xml:23:13-66
+88
+89        <provider
+89-->[androidx.emoji2:emoji2:1.2.0] /Users/cesarbalzer/.gradle/caches/transforms-3/48d026d255ecf22cd1c02590a8ffac0a/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:24:9-32:20
+90            android:name="androidx.startup.InitializationProvider"
+90-->[androidx.emoji2:emoji2:1.2.0] /Users/cesarbalzer/.gradle/caches/transforms-3/48d026d255ecf22cd1c02590a8ffac0a/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:25:13-67
+91            android:authorities="br.com.telefones_uteis.androidx-startup"
+91-->[androidx.emoji2:emoji2:1.2.0] /Users/cesarbalzer/.gradle/caches/transforms-3/48d026d255ecf22cd1c02590a8ffac0a/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:26:13-68
+92            android:exported="false" >
+92-->[androidx.emoji2:emoji2:1.2.0] /Users/cesarbalzer/.gradle/caches/transforms-3/48d026d255ecf22cd1c02590a8ffac0a/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:27:13-37
+93            <meta-data
+93-->[androidx.emoji2:emoji2:1.2.0] /Users/cesarbalzer/.gradle/caches/transforms-3/48d026d255ecf22cd1c02590a8ffac0a/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:29:13-31:52
+94                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+94-->[androidx.emoji2:emoji2:1.2.0] /Users/cesarbalzer/.gradle/caches/transforms-3/48d026d255ecf22cd1c02590a8ffac0a/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:30:17-75
+95                android:value="androidx.startup" />
+95-->[androidx.emoji2:emoji2:1.2.0] /Users/cesarbalzer/.gradle/caches/transforms-3/48d026d255ecf22cd1c02590a8ffac0a/transformed/jetified-emoji2-1.2.0/AndroidManifest.xml:31:17-49
+96            <meta-data
+96-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/cesarbalzer/.gradle/caches/transforms-3/d8c1e157053cdeb7959f14dc5c97e569/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:31:13-33:52
+97                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+97-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/cesarbalzer/.gradle/caches/transforms-3/d8c1e157053cdeb7959f14dc5c97e569/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:32:17-78
+98                android:value="androidx.startup" />
+98-->[androidx.lifecycle:lifecycle-process:2.4.1] /Users/cesarbalzer/.gradle/caches/transforms-3/d8c1e157053cdeb7959f14dc5c97e569/transformed/jetified-lifecycle-process-2.4.1/AndroidManifest.xml:33:17-49
+99        </provider>
+100    </application>
+101
+102</manifest>

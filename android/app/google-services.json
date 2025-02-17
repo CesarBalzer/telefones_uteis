@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "382214405428",
+    "project_id": "telefones-uteis",
+    "storage_bucket": "telefones-uteis.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:382214405428:android:b458ebea244acee25af961",
+        "android_client_info": {
+          "package_name": "br.com.telefones_uteis"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "382214405428-6d8hj63das0ufm06j74bko791adfmf23.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.telefones_uteis",
+            "certificate_hash": "6339eaffd1d926a9a97dbe36bfb2de9093ec91fe"
+          }
+        },
+        {
+          "client_id": "382214405428-0brg7dmeo8q8j7d838q1nevdre0afmj5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKWwmhJr4z_mhaXEprVgWIVujvROEsAOE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "382214405428-0brg7dmeo8q8j7d838q1nevdre0afmj5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "382214405428-s13e1i3tu8bd86eoqv1v3lopbr1vhmlh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "br.com.telefonesuteis.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

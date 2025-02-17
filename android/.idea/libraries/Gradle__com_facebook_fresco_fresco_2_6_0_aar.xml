@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="Gradle: com.facebook.fresco:fresco:2.6.0@aar" external-system-id="GRADLE">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/0a92d6c561520d2a54122d44ffeb7387/transformed/jetified-fresco-2.6.0/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/0a92d6c561520d2a54122d44ffeb7387/transformed/jetified-fresco-2.6.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/0a92d6c561520d2a54122d44ffeb7387/transformed/jetified-fresco-2.6.0/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.facebook.fresco/fresco/2.6.0/de09ead3f72d4189eded26207daa93570e9c50af/fresco-2.6.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.facebook.fresco/fresco/2.6.0/d8f2193d46a21f3eb99824ba4b6528e0485f7ab/fresco-2.6.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -10,38 +10,12 @@ O aplicativo é uma ferramenta para acesso rápido aos serviços de emergência 
 
 Crie atalhos dos números em sua tela inicial para agilizar chamadas de emergência por exemplo, ou de qualquer outro número.
 
-## Aplicativo Híbrido desenvolvido para Android
+## Aplicativo desenvolvido para Android
 
-    ** Não testado e nem disponível para IOS
+    ** Sem data de implementação para IOS
 
 ## Tecnologias de código aberto utilizadas:
 
-
-### Apache Cordova
-- [Site Oficial Apache Cordova](https://cordova.apache.org)
-
-- [Documentação Oficial Apache Cordova](https://cordova.apache.org/docs/en/latest/)
-
-
-### Framework7
-- [Site Oficial Framework7 v.4.0.0](http://framework7.io)
-
-- [Documentação Oficial Framework7 v.4.0.0](http://framework7.io/docs)
-
-
-### Plugin Call Number
-
-- Desenvolvido por [Rofosho](https://github.com/Rohfosho/CordovaCallNumberPlugin.git)
-
-
-### Ícones utilizados
-
-- Todos os ícones utilizados foram baixados do [FLATICON](https://www.flaticon.com)
-
-
-### Código aberto à comunidade dev Cordova no telegram
-
-- [Link para o grupo no Telegram](https://t.me/devcordova)
 
 ## Banco de dados
 
@@ -51,32 +25,6 @@ Crie atalhos dos números em sua tela inicial para agilizar chamadas de emergên
 
 - [Documentação Apache Cordova WebSQL](https://cordova.apache.org/docs/en/latest/cordova/storage/storage.html#websql)
 
-
-## Instalação para desenvolvedores
-
- Clone o repositório em seu ambiente de desenvolvimento ou faça um fork para contribuir com melhorias no projeto.
-
-    git clone https://github.com/CesarBalzer/telefones_uteis
-
- Para saber mais sobre a criação de aplicativos utilizando Apache Cordova acesse o site oficial da documentação:
-
-- [Criando seu primeiro aplicativo com Cordova](https://cordova.apache.org/docs/en/latest/guide/cli/index.html)
-
-### Adicione a plataforma Android
-
-    cordova platform add android
-    
-### Execute o código
-
- Para construir
-
-    cordova build android
-
- Ou para rodar no dispositivo*
-
-    cordova run android --device
-
- *No meu caso já estava configurado para utilizar a flag --device
 
 ## Instalação para usuários em dispositivos
 

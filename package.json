@@ -44,7 +44,7 @@
     "react-native-screens": "^3.30.1",
     "react-native-section-alphabet-list": "^3.0.0",
     "react-native-select-dropdown": "^4.0.0",
-    "react-native-shortcut-custom": "^0.4.11",
+    "react-native-shortcut-custom": "^0.4.12",
     "react-native-skeleton-placeholder": "^5.2.4",
     "react-native-sqlite-storage": "^6.0.1",
     "react-native-svg": "^15.1.0",

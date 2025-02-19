@@ -29,14 +29,14 @@ export default class Service {
 
   private async handleUnauthorized() {
     console.log('Sessão Expirada');
-    await StorageService.remove('access_token');
+    await StorageService.remove('token');
     this.unauthenticatedCallbacks.forEach((callback) => callback());
   }
 
   private configureInterceptors(instance: AxiosInstance) {
     instance.interceptors.request.use(
       async (config) => {
-        const token = await StorageService.getData('access_token');
+        const token = await StorageService.getData('token');
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }

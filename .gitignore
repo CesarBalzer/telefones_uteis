@@ -10,6 +10,9 @@ firebase-debug.*.log*
 # Firebase cache
 .firebase/
 
+android/.gradle
+ios/Pods
+
 # Firebase config
 
 # Uncomment this if you'd like others to create their own Firebase project.

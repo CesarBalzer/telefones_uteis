@@ -82,6 +82,7 @@ const populatePhones = async (db, phones) => {
   for (const phone of phones) {
     const {
       title,
+      ddd,
       number,
       description,
       icon,
@@ -91,8 +92,18 @@ const populatePhones = async (db, phones) => {
       state_id,
     } = phone;
     await db.executeSql(
-      'INSERT INTO phone (title, number, description, icon, active, favored, category_id, state_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-      [title, number, description, icon, active, favored, category_id, state_id]
+      'INSERT INTO phone (title, ddd, number, description, icon, active, favored, category_id, state_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [
+        title,
+        ddd,
+        number,
+        description,
+        icon,
+        active,
+        favored,
+        category_id,
+        state_id,
+      ]
     );
   }
 };
@@ -132,6 +143,7 @@ export const createTablesQueries = async (db) => {
     CREATE TABLE IF NOT EXISTS phone(
       id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
       title TEXT,
+      ddd TEXT,
       number TEXT,
       description TEXT,
       icon TEXT,

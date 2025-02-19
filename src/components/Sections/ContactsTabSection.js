@@ -23,6 +23,7 @@ import ContactCard from '../Cards/ContactCard';
 import ContactContent from '../Content/ContactContent';
 import ContactModal from '../Modals/ContactModal';
 import { useNavigation } from '@react-navigation/native';
+import { normalizeText } from '../../utils/Helpers';
 
 const ContactsTabSection = ({ route, navigate }) => {
   const { theme } = useContext(ThemeContext);
@@ -88,16 +89,7 @@ const ContactsTabSection = ({ route, navigate }) => {
     })();
   }, []);
 
-  const normalizeText = (text) => {
-    if (typeof text !== 'string') {
-      return '';
-    }
-    console.log('TEXT => ', text);
-    return text
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '');
-  };
+
 
   const textIncludesInFields = (item, text) => {
     const fieldsToSearch = ['title', 'number', 'ddd', 'description'];

@@ -24,7 +24,7 @@ export const getPhones = async () => {
   });
 };
 
-export const getPhoneById = async(id) => {
+export const getPhoneById = async (id) => {
   return new Promise(async (resolve, reject) => {
     (await db).transaction((tx) => {
       tx.executeSql(
@@ -52,8 +52,8 @@ export const addPhone = async (phone) => {
   return new Promise(async (resolve, reject) => {
     (await db).transaction((tx) => {
       tx.executeSql(
-        'INSERT INTO phone (title, number, description, icon) VALUES (?, ?, ?, ?)',
-        [phone.title, phone.number, phone.description, phone.icon],
+        'INSERT INTO phone (title, ddd, number, description, icon) VALUES (?, ?, ?, ?, ?)',
+        [phone.title, phone.ddd, phone.number, phone.description, phone.icon],
         (_, results) => {
           if (results.rowsAffected > 0) {
             resolve();
@@ -74,11 +74,11 @@ export const updatePhone = async (id, newPhone) => {
   console.log('UPDATE PHONE => ', newPhone);
   return new Promise(async (resolve, reject) => {
     (await db).transaction((tx) => {
-      const { title, number, description, icon, favored } = newPhone;
+      const { title, ddd, number, description, icon, favored } = newPhone;
 
       tx.executeSql(
-        'UPDATE phone SET title = ?, number = ?, description = ?, icon = ?, favored = ? WHERE id = ?',
-        [title, number, description, icon, favored, id],
+        'UPDATE phone SET title = ?, ddd = ?, number = ?, description = ?, icon = ?, favored = ? WHERE id = ?',
+        [title, ddd, number, description, icon, favored, id],
         (_, results) => {
           if (results.rowsAffected > 0) {
             resolve();
@@ -215,7 +215,7 @@ const PhoneService = {
   removePhone,
   getPhonesByStateId,
   getPhonesByCategoryId,
-  getPhonesFavoreds
+  getPhonesFavoreds,
 };
 
 export default PhoneService;

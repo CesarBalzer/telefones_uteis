@@ -50,14 +50,14 @@ const InstructionModal = ({ onConfirm, buttonEnabled, setButtonEnabled }) => {
   return (
     <View style={styles.instructionsContainer}>
       <View style={styles.header}>
-        <Text style={styles.title}>Selecionar um estado</Text>
+        <Text style={styles.title}>No mapa ou na lista, veja as instruções:</Text>
       </View>
       <View style={styles.animationContainer}>
         {currentAnimation === 'pinch' ? (
           <>
             <Text style={styles.instructionText}>
               Use o gesto de pinça para ampliar e explorar o mapa e toque no
-              estado desejado.
+              estado padrão.
             </Text>
             <AnimatedLottieView
               source={pinch}
@@ -69,7 +69,7 @@ const InstructionModal = ({ onConfirm, buttonEnabled, setButtonEnabled }) => {
           <>
             <Text style={styles.instructionText}>
               Ou deslize para os lados na lista abaixo para escolher o estado
-              desejado.
+              padrão.
             </Text>
             <AnimatedLottieView
               source={swipe}
@@ -119,12 +119,12 @@ const createStyles = (colors) =>
       alignItems: 'center',
     },
     title: {
-      fontSize: 24,
+      fontSize: 20,
       fontWeight: 'bold',
       textAlign: 'center',
     },
     animationContainer: {
-      flex: 1,
+      // flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
     },

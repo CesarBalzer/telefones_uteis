@@ -2,28 +2,36 @@ import React, { useEffect, useState } from 'react';
 import { UserContext } from '../context/UserContext';
 import StorageService from '../services/StorageService';
 
+const initialState = {
+  name: null,
+  email: null,
+  birthday: null,
+  password: null,
+  state_id: null,
+  country_state_id: null,
+  logged: false,
+  welcome: false,
+};
+
 const UserProvider = ({ children }) => {
-  const initiaState = {
-    name: null,
-    email: null,
-    birthday: null,
-    password: null,
-    state_id: null,
-    logged: false,
-    welcome: false,
-  };
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(initialState);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
       const userStorage = await StorageService.getJson('user');
       if (userStorage) {
         setUser(userStorage);
-      } else {
-        setUser(initiaState);
       }
+      setLoading(false);
     })();
   }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      StorageService.storeJson('user', user);
+    }
+  }, [user]);
 
   const login = async (userData) => {
     setUser(userData);
@@ -31,14 +39,13 @@ const UserProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    const newState = { ...user, logged: false, password: null, state_id: null };
+    const newState = { ...initialState, logged: false };
     setUser(newState);
     await StorageService.storeJson('user', newState);
   };
 
   const getUser = async () => {
     const userStorage = await StorageService.getJson('user');
-    // console.log('USER STORAGE => ', userStorage);
     if (userStorage) {
       setUser(userStorage);
     }
@@ -48,13 +55,16 @@ const UserProvider = ({ children }) => {
   const saveUser = async (userData) => {
     setUser(userData);
     await StorageService.storeJson('user', userData);
-    setUser(userData);
   };
 
-  const resetUser = async (userData) => {
-    setUser(initiaState);
-    await StorageService.storeJson('user', initiaState);
+  const resetUser = async () => {
+    setUser(initialState);
+    await StorageService.storeJson('user', initialState);
   };
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <UserContext.Provider

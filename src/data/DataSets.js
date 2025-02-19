@@ -4294,7 +4294,7 @@ export const mato_grosso_do_sul = [
     category_id: 1,
     ddd: '',
     description: '',
-    icon: '',
+    icon: 'pre.png',
     number: '198',
     title: 'Polícia Rodoviária Estadual',
     state_id: 12,

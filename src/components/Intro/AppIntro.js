@@ -16,7 +16,7 @@ const WINDOW_DIMENSIONS = Dimensions.get('window');
 
 const AppIntro = () => {
   const { theme } = useContext(ThemeContext);
-  const { user, setUser, saveUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   let activeColors = colors[theme.mode];
   const styles = createStyles(activeColors, WINDOW_DIMENSIONS);
 
@@ -73,7 +73,6 @@ const AppIntro = () => {
 
   const finish = async () => {
     setUser({ ...user, welcome: true });
-    saveUser({ ...user, welcome: true });
   };
 
   const renderItem = (props) => {

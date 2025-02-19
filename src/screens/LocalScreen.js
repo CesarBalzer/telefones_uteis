@@ -3,7 +3,7 @@ import { colors } from '../config/theme';
 import { ThemeContext } from '../context/ThemeContext';
 import { View, ScrollView, RefreshControl } from 'react-native';
 import { StyleSheet } from 'react-native';
-import MyLocalTabSection from '../components/Sections/MyLocalTabSection';
+import LocalTabSection from '../components/Sections/LocalTabSection';
 import Bottomsheet from '../components/Sheets/Bottomsheet';
 
 const MyLocalScreen = ({ route, navigation }) => {
@@ -30,7 +30,7 @@ const MyLocalScreen = ({ route, navigation }) => {
       }
     >
       <View style={{ flexGrow: 1 }}>
-        <MyLocalTabSection route={route} />
+        <LocalTabSection route={route} />
         {/* <Bottomsheet /> */}
       </View>
     </ScrollView>

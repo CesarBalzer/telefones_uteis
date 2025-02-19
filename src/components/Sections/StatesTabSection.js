@@ -9,7 +9,7 @@ import InputSearch from '../Inputs/InputSearch';
 import SkelletonPhoneItem from '../../skeletons/SkelletonPhoneItem';
 import { useModal } from '../../context/ModalContext';
 import { useNavigation } from '@react-navigation/native';
-import StateCard from '../Cards/StateCard';
+import StateCard from '../../screens/states/StateCard';
 import { UserContext } from '../../context/UserContext';
 import { getCategories } from '../../db/CategoryService';
 import { getStateById, getStates } from '../../db/StateService';
@@ -20,6 +20,7 @@ import {
   getPhonesByStateId,
 } from '../../db/PhoneService';
 import PhoneModal from '../Modals/PhoneModal';
+import { normalizeText } from '../../utils/Helpers';
 
 const StatesTabSection = ({ route, navigation }) => {
   const { theme } = useContext(ThemeContext);
@@ -67,16 +68,21 @@ const StatesTabSection = ({ route, navigation }) => {
     const sts = await getStates();
     setStates(sts);
 
-    if (user && user.state_id) {
-      const foundState = await getStateById(user.state_id);
+    if (user && user.country_state_id) {
+      const foundState = await getStateById(user.country_state_id);
       setSelectedState(foundState);
       navigate.setOptions({
         title: foundState && foundState.name ? `${foundState.name}` : 'Brasil',
       });
 
       setTimeout(() => {
-        const index = sts.findIndex((item) => item.id == user.state_id);
-        if (index) handleScroll(index);
+        const index = sts.findIndex(
+          (item) => item.id === user.country_state_id
+        );
+
+        if (index !== -1) {
+          handleScroll(index);
+        }
       }, 500);
     }
   };
@@ -97,22 +103,27 @@ const StatesTabSection = ({ route, navigation }) => {
 
   const handleStatePress = (data) => {
     setLoading(true);
-    const filteredPhonesStates = phones.filter(
-      (item) => item.state_id == data.id
-    );
 
+    const filteredPhonesStates = phones.filter(
+      (item) => item.state_id === data.id
+    );
     const filteredPhonesCategories = filteredPhonesStates.filter(
-      (item) => item.category_id == selectedCategory.id
+      (item) => item.category_id === selectedCategory.id
     );
 
     setFilteredData(filteredPhonesCategories);
     setOriginalData(filteredPhonesCategories);
     setSelectedState(data);
 
+    setUser({ ...user, country_state_id: data.id });
+
     navigate.setOptions({ title: data.name });
 
-    const index = states.findIndex((item) => item.id == data.id);
-    if (index) handleScroll(index);
+    const index = states.findIndex((item) => item.id === data.id);
+
+    if (index !== -1) {
+      handleScroll(index);
+    }
 
     setTimeout(() => {
       setLoading(false);
@@ -120,7 +131,18 @@ const StatesTabSection = ({ route, navigation }) => {
   };
 
   const handleScroll = (idx) => {
-    statesScrollViewRef.current.scrollToIndex({ animated: true, index: idx });
+    if (!statesScrollViewRef.current) return;
+
+    setTimeout(() => {
+      try {
+        statesScrollViewRef.current.scrollToIndex({
+          animated: true,
+          index: idx,
+        });
+      } catch (error) {
+        console.log('Erro ao rolar para o estado:', error);
+      }
+    }, 300);
   };
 
   const handleCategoryPress = (data) => {
@@ -158,17 +180,6 @@ const StatesTabSection = ({ route, navigation }) => {
     return fieldsToSearch.some((field) =>
       normalizeText(item[field]).includes(normalizedText)
     );
-  };
-
-  const normalizeText = (text) => {
-    if (typeof text !== 'string') {
-      return '';
-    }
-    console.log('TEXT => ', text);
-    return text
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '');
   };
 
   const handleIconSearch = () => {
@@ -239,23 +250,26 @@ const StatesTabSection = ({ route, navigation }) => {
   return (
     <View>
       <View style={styles.containerCardsStates}>
-        {states && states.length && selectedState ? (
+        {states && states.length ? (
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
             ref={statesScrollViewRef}
+            data={states}
+            keyExtractor={(item) => item.id.toString()}
+            getItemLayout={(data, index) => ({
+              length: 120,
+              offset: 134 * index,
+              index,
+            })}
             renderItem={({ item }) => (
               <StateCard
                 key={item.id}
                 title={item.name}
                 onPress={() => handleStatePress(item)}
-                isActive={item.id === selectedState.id}
+                isActive={item.id === selectedState?.id}
               />
             )}
-            data={states}
-            keyExtractor={(item, index) => item.id.toString()}
-            getItemLayout={getItemLayout}
-            ListEmptyComponent={<View />}
           />
         ) : (
           <View />

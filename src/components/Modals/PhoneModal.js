@@ -19,7 +19,7 @@ import CustomButton from '../Buttons/CustomButton';
 import { colors } from '../../config/theme';
 import { ThemeContext } from '../../context/ThemeContext';
 import InputField from '../Inputs/InputField';
-import DataSets from '../../data/DataSets';
+// import DataSets from '../../data/DataSets';
 import DynamicSelectDropdown from '../Selects/DynamicSelectDropdown';
 import Modal from 'react-native-modal';
 import LinearGradient from 'react-native-linear-gradient';
@@ -28,15 +28,18 @@ import {
   getAssetIcons,
   addDirectCallShortcut,
 } from 'react-native-shortcut-custom';
+import { getCategories } from '../../db/CategoryService';
+import { getStates } from '../../db/StateService';
 
 const PhoneModal = ({ data, onConfirm }) => {
+  console.log('PHONE MODAL => ', data);
   const { theme } = useContext(ThemeContext);
   let activeColors = colors[theme.mode];
   const styles = createStyles(activeColors);
   const [phone, setPhone] = useState(data);
-  const [categories, setCategories] = useState(DataSets.categories);
+  const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState();
-  const [states, setStates] = useState(DataSets.states);
+  const [states, setStates] = useState([]);
   const [selectedState, setSelectedState] = useState();
   const [loading, setLoading] = useState(false);
   const [enabled, setEnabled] = useState(false);
@@ -49,12 +52,7 @@ const PhoneModal = ({ data, onConfirm }) => {
       : require('react-native-extra-dimensions-android').get(
           'REAL_WINDOW_HEIGHT'
         );
-
   const [isFavored, setIsFavored] = useState(data.favored);
-  
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
 
   useEffect(() => {
     fetchIcons();
@@ -81,6 +79,10 @@ const PhoneModal = ({ data, onConfirm }) => {
       ? setSelectedState(filteredStates[0])
       : setSelectedState(null);
   }, []);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
   const handleChange = async (evt) => {
     // console.log('HANDLE CHANGE => ', evt);
@@ -116,6 +118,12 @@ const PhoneModal = ({ data, onConfirm }) => {
     try {
       const files = await getAssetIcons();
       setImagePaths(files);
+
+      const fetchCategories = await getCategories();
+      setCategories(fetchCategories);
+
+      const fetchStates = await getStates();
+      setStates(fetchStates);
     } catch {
       Alert.alert('Erro', 'Não foi possível listar os ícones.');
     }
@@ -127,7 +135,7 @@ const PhoneModal = ({ data, onConfirm }) => {
     const permissions = [
       PermissionsAndroid.PERMISSIONS.CALL_PHONE,
       PermissionsAndroid.PERMISSIONS.WRITE_CONTACTS,
-      'com.android.launcher.permission.INSTALL_SHORTCUT', // CREATE_SHORTCUT pode ser substituído por essa string específica
+      'com.android.launcher.permission.INSTALL_SHORTCUT',
     ];
 
     const messages = {

@@ -10,6 +10,7 @@ import ThemeProvider from './src/providers/ThemeProvider';
 import ModalProvider from './src/providers/ModalProvider';
 import UserProvider from './src/providers/UserProvider';
 import { isDatabaseInitialized, populateTables } from './src/db/db-service';
+import { AuthProvider } from './src/context/AuthContext';
 
 const MainApp = () => {
   const [showSplash, setShowSplash] = useState(true);
@@ -45,9 +46,11 @@ const MainApp = () => {
   return (
     <ThemeProvider>
       <ModalProvider>
+      <AuthProvider>
         <UserProvider>
           <App />
         </UserProvider>
+      </AuthProvider>
       </ModalProvider>
     </ThemeProvider>
   );

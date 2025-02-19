@@ -3,14 +3,11 @@ import {
   View,
   Text,
   StyleSheet,
-  FlatList,
   Animated,
   Easing,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import LottieView from 'lottie-react-native';
-import MapScreen from './MapScreen';
-import StateCard from '../components/Cards/StateCard';
+import MapScreen from './states/MapScreen';
 import CustomButton from '../components/Buttons/CustomButton';
 import { getStateById, getStates } from '../db/StateService';
 import { ThemeContext } from '../context/ThemeContext';
@@ -68,11 +65,11 @@ const StatesScreen = () => {
   const loadStates = async () => {
     const sts = await getStates();
     setStates(sts);
-  
+
     if (user && user.state_id && sts.length > 0) {
       const foundState = await getStateById(user.state_id);
       setSelectedState(foundState);
-  
+
       setTimeout(() => {
         const index = sts.findIndex((item) => item.id == user.state_id);
         if (index >= 0) handleScroll(index);
@@ -105,14 +102,15 @@ const StatesScreen = () => {
   };
 
   const handleScroll = (idx) => {
-    console.log('HANDLESCROLL => ', idx);
-  
     if (!statesScrollViewRef.current || states.length === 0) {
       return;
     }
-  
+
     setTimeout(() => {
-      statesScrollViewRef.current?.scrollToIndex({ animated: true, index: idx });
+      statesScrollViewRef.current?.scrollToIndex({
+        animated: true,
+        index: idx,
+      });
     }, 300);
   };
 
@@ -128,9 +126,6 @@ const StatesScreen = () => {
         <View style={styles.container}>
           <View style={styles.containerMap}>
             <MapScreen onPress={handleState} selected={selectedState?.id} />
-          </View>
-          <View style={styles.containerTitle}>
-            <Text style={styles.title}>Selecione um estado</Text>
           </View>
           <View style={styles.containerCards}>
             <StateList

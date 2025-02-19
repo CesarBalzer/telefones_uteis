@@ -74,15 +74,6 @@ const Main = ({ route, navigation }) => {
         options={{
           tabBarLabel: 'Contatos',
           title: 'Contatos',
-          // headerLeft: () => (
-          //   <View style={{backgroundColor:'yellowgreen'}}>
-          //     <Button
-          //       onPress={() => alert('This is a button!')}
-          //       title="Info"
-          //       color="yellowgreen"
-          //     />
-          //   </View>
-          // ),
         }}
         component={ContactsScreen}
       />

@@ -1,4 +1,4 @@
-export default phones =
+export default PhonesMock =
  [
   {
     active: 1,
@@ -7421,7 +7421,7 @@ export default phones =
   {
     active: 1,
     category_id: 1,
-    ddd: '',
+    ddd: '41',
     description: '',
     favored: false,
     icon: 'iml.png',

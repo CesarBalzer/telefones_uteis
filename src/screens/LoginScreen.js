@@ -23,18 +23,21 @@ const LoginScreen = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
   let activeColors = colors[theme.mode];
   const styles = createStyles(activeColors);
-  const { login, getUser } = useContext(UserContext);
-  const [usr, setUsr] = useState();
+  const { user, setUser } = useContext(UserContext);
+  const [usr, setUsr] = useState({
+    email: 'cesar.balzer@codesign.ag',
+    password: 'Secret.321',
+  });
   const [loading, setLoading] = useState(false);
   const [validationError, setValidationError] = useState('');
 
-  useEffect(() => {
-    (async () => {
-      const _usr = await getUser();
-      console.log('_USR => ', _usr);
-      if (_usr) setUsr(_usr);
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const _usr = await getUser();
+  //     console.log('_USR => ', _usr);
+  //     if (_usr) setUsr(_usr);
+  //   })();
+  // }, []);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -43,15 +46,7 @@ const LoginScreen = ({ navigation }) => {
       setLoading(false);
       return;
     }
-
-    usr.logged = true;
-    usr.state_id = 16;
-    login(usr);
-
-    setTimeout(() => {
-      setLoading(false);
-      navigation.navigate('Main');
-    }, 2000);
+    setUser({ ...user, logged: true });
   };
 
   return (

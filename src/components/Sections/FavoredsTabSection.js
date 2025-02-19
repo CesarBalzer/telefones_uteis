@@ -43,10 +43,6 @@ const FavoredsTabSection = ({ route }) => {
         (contact) => contact.isStarred
       );
 
-      console.log('PHONS => ', phons);
-
-      console.log('STARRED CONTACTS => ', starredContacts);
-
       const phonsz = starredContacts
         .map((contact) => {
           return contact.phoneNumbers.map((phone) => ({
@@ -76,7 +72,7 @@ const FavoredsTabSection = ({ route }) => {
     if (typeof text !== 'string') {
       return '';
     }
-    console.log('TEXT => ', text);
+    // console.log('TEXT => ', text);
     return text
       .toLowerCase()
       .normalize('NFD')

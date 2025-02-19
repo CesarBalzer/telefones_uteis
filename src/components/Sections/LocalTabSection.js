@@ -1,12 +1,10 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CategoryLocalCard from '../Cards/CategoryLocalCard';
 import LocalContent from '../Content/LocalContent';
 import { colors } from '../../config/theme';
 import { ThemeContext } from '../../context/ThemeContext';
-import InputSearch from '../Inputs/InputSearch';
 import SkelletonPhoneItem from '../../skeletons/SkelletonPhoneItem';
 import SkelletonInputSearch from '../../skeletons/SkelletonInputSearch';
 import { useModal } from '../../context/ModalContext';
@@ -21,8 +19,9 @@ import {
   getPhonesByStateId,
 } from '../../db/PhoneService';
 import { normalizeText } from '../../utils/Helpers';
+import LocalSearch from '../../screens/local/LocalSearch';
 
-const MyLocalTabSection = ({ route }) => {
+const LocalTabSection = ({ route }) => {
   const { theme } = useContext(ThemeContext);
   const { user } = useContext(UserContext);
   let activeColors = colors[theme.mode];
@@ -146,37 +145,6 @@ const MyLocalTabSection = ({ route }) => {
     index,
   });
 
-  const handleIconSearch = () => {
-    setSearchText('');
-    loadPhonesByStateId();
-  };
-
-  const ActionIconSearch = ({ value, loading }) => {
-    return (
-      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-        {loading ? (
-          <ActivityIndicator size={30} color={activeColors.accent} style={{}} />
-        ) : value == '' ? (
-          <Icon
-            name="magnify"
-            size={30}
-            color="#666"
-            style={{ marginRight: 5 }}
-          />
-        ) : (
-          <TouchableOpacity onPress={handleIconSearch}>
-            <Icon
-              name="close"
-              size={30}
-              color="#666"
-              style={{ marginRight: 5 }}
-            />
-          </TouchableOpacity>
-        )}
-      </View>
-    );
-  };
-
   return (
     <View>
       <View style={styles.containerCardsCategories}>
@@ -199,21 +167,17 @@ const MyLocalTabSection = ({ route }) => {
         />
       </View>
 
-      <View style={styles.containerSearch}>
+      <View>
         {loading ? (
           <>
             <SkelletonInputSearch />
           </>
         ) : (
-          <InputSearch
-            selectionColor={activeColors.tint}
-            label={'Pesquisar...'}
-            icon={
-              <ActionIconSearch value={searchText} loading={loadingPhone} />
-            }
-            keyboardType={'name-phone-pad'}
-            onChangeText={handleSearch}
+          <LocalSearch
             value={searchText}
+            setValue={() => setSearchText('')}
+            onChange={handleSearch}
+            loading={loadingPhone}
           />
         )}
       </View>
@@ -236,16 +200,6 @@ const createStyles = (colors) => {
       paddingVertical: 5,
       backgroundColor: `${colors.tint}35`,
     },
-    containerSearch: {
-      marginTop: 15,
-      paddingVertical: 15,
-      paddingHorizontal: 10,
-      marginHorizontal: 10,
-      backgroundColor: `${colors.primary}`,
-      borderColor: colors.accent,
-      borderWidth: 1,
-      borderRadius: 10,
-    },
     sectionTitle: {
       marginTop: 25,
       marginLeft: 25,
@@ -255,4 +209,4 @@ const createStyles = (colors) => {
   return styles;
 };
 
-export default MyLocalTabSection;
+export default LocalTabSection;

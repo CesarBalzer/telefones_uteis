@@ -10,10 +10,10 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
-import { ThemeContext } from '../context/ThemeContext';
-import { colors } from '../config/theme';
-import Controls from './map/Controls';
-import States from './map/States';
+import { ThemeContext } from '../../context/ThemeContext';
+import { colors } from '../../config/theme';
+import Controls from '../map/Controls';
+import States from '../map/States';
 
 const MapScreen = ({ onPress, selected }) => {
   const { theme } = useContext(ThemeContext);

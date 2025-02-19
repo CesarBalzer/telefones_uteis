@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatList, StyleSheet } from 'react-native';
-import StateCard from '../../components/Cards/StateCard';
+import StateCard from './StateCard';
 
 const StateList = ({ states, selectedState, onStateSelect, scrollRef }) => {
   const getItemLayout = (data, index) => ({

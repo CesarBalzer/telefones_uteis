@@ -6,7 +6,7 @@ import InputSearch from '../../components/Inputs/InputSearch';
 import { ThemeContext } from '../../context/ThemeContext';
 import { colors } from '../../config/theme';
 
-const LocalSearch = ({ value, setValue, onChange, loading }) => {
+const LocalSearch = ({ value, setValue, onChange, loading, onReset }) => {
   const { theme } = useContext(ThemeContext);
   let activeColors = colors[theme.mode];
   const styles = createStyles(activeColors);
@@ -14,8 +14,15 @@ const LocalSearch = ({ value, setValue, onChange, loading }) => {
     <View style={styles.container}>
       <InputSearch
         selectionColor={activeColors.tint}
-        label={'Pesquisar...'}
-        icon={<ActionIconSearch value={value} loading={loading} setValue={setValue} />}
+        label={'Digite algo...'}
+        icon={
+          <ActionIconSearch
+            value={value}
+            loading={loading}
+            setValue={setValue}
+            onReset={onReset}
+          />
+        }
         keyboardType={'name-phone-pad'}
         onChangeText={onChange}
         value={value}

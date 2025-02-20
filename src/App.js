@@ -11,7 +11,6 @@ const App = () => {
   const [theme] = useState({ mode: Appearance.getColorScheme() });
   let activeColors = colors[theme.mode];
   const { user } = useContext(UserContext);
-  console.log('APP - USER => ', user, theme);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

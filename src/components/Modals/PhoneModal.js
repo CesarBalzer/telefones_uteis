@@ -32,7 +32,7 @@ import { getCategories } from '../../db/CategoryService';
 import { getStates } from '../../db/StateService';
 
 const PhoneModal = ({ data, onConfirm }) => {
-  console.log('PHONE MODAL => ', data);
+  // console.log('PHONE MODAL => ', data);
   const { theme } = useContext(ThemeContext);
   let activeColors = colors[theme.mode];
   const styles = createStyles(activeColors);

@@ -22,7 +22,6 @@ export default class Service {
     this.client = axios.create({
       baseURL,
     });
-
     this.configureInterceptors(this.client);
     this.initializeModules(this.client);
   }
@@ -36,7 +35,7 @@ export default class Service {
   private configureInterceptors(instance: AxiosInstance) {
     instance.interceptors.request.use(
       async (config) => {
-        const token = await StorageService.getData('token');
+        const token = await StorageService.get('token');
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }

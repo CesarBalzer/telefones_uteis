@@ -6,7 +6,7 @@ export const getStates = async () => {
   return new Promise(async (resolve, reject) => {
     (await db).transaction((tx) => {
       tx.executeSql(
-        'SELECT * FROM state order by name asc',
+        'SELECT * FROM states order by name asc',
         [],
         (_, results) => {
           const states = [];
@@ -16,6 +16,7 @@ export const getStates = async () => {
           resolve(states);
         },
         (_, error) => {
+          console.log('ERRORZZZ => ', error);
           reject(error);
           return false;
         }
@@ -28,7 +29,7 @@ export const getStateById = async (id) => {
   return new Promise(async (resolve, reject) => {
     (await db).transaction((tx) => {
       tx.executeSql(
-        'SELECT * FROM state WHERE id = ?',
+        'SELECT * FROM states WHERE id = ?',
         [id],
         (_, results) => {
           if (results.rows.length > 0) {
@@ -77,7 +78,7 @@ export const editState = async (id, newCategory) => {
       const { title, description, icon } = newCategory;
 
       tx.executeSql(
-        'UPDATE category SET title = ?, description = ?, icon = ? WHERE id = ?',
+        'UPDATE categories SET title = ?, description = ?, icon = ? WHERE id = ?',
         [title, description, icon, id],
         (_, results) => {
           if (results.rowsAffected > 0) {
@@ -101,7 +102,7 @@ export const removeState = async (id) => {
   return new Promise(async (resolve, reject) => {
     (await db).transaction((tx) => {
       tx.executeSql(
-        'DELETE FROM category WHERE id = ?',
+        'DELETE FROM categories WHERE id = ?',
         [id],
         (_, results) => {
           if (results.rowsAffected > 0) {
@@ -123,7 +124,7 @@ export const getPhonesWithCategories = async () => {
   return new Promise(async (resolve, reject) => {
     (await db).transaction((tx) => {
       tx.executeSql(
-        'SELECT phone.*, category.name as category_name FROM phone LEFT JOIN category ON phone.category_id = category.id',
+        'SELECT phone.*, category.name as category_name FROM phones LEFT JOIN categories ON phone.category_id = category.id',
         [],
         (_, results) => {
           const phonesWithCategories = [];

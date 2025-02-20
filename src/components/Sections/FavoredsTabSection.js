@@ -17,6 +17,7 @@ import PhoneModal from '../Modals/PhoneModal';
 import { updatePhone, getPhonesFavoreds } from '../../db/PhoneService';
 import EmptyScreen from '../../screens/EmptyScreen';
 import { getAll } from 'react-native-contacts';
+import { normalizeText } from '../../utils/Helpers';
 
 const FavoredsTabSection = ({ route }) => {
   const { theme } = useContext(ThemeContext);
@@ -60,23 +61,12 @@ const FavoredsTabSection = ({ route }) => {
         .flat();
 
       const merge = [...phons, ...phonsz];
-      
+
       setPhones(merge);
       setOriginalPhones(merge);
     } catch (error) {
       console.log('ERROR => ', error);
     }
-  };
-
-  const normalizeText = (text) => {
-    if (typeof text !== 'string') {
-      return '';
-    }
-    // console.log('TEXT => ', text);
-    return text
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '');
   };
 
   const textIncludesInFields = (item, text) => {

@@ -17,6 +17,7 @@ import {
   updatePhone,
   getPhoneById,
   getPhonesByStateId,
+  getContactsAndPhones,
 } from '../../db/PhoneService';
 import { normalizeText } from '../../utils/Helpers';
 import LocalSearch from '../../screens/local/LocalSearch';
@@ -45,7 +46,7 @@ const LocalTabSection = ({ route }) => {
     (async () => {
       setLoadingPhone(true);
       const cats = await loadCategories();
-      const state = await loadStates(user);
+      const state = await loadState(user);
       await loadPhonesByStateId(cats, state);
       setLoadingPhone(false);
     })();
@@ -60,9 +61,10 @@ const LocalTabSection = ({ route }) => {
     return categs[0];
   };
 
-  const loadStates = async (usr) => {
+  const loadState = async (usr) => {
     if (usr && usr.state_id) {
       const foundState = await getStateById(usr.state_id);
+      // console.log('FOUNDSTATE => ', foundState);
       setSelectedState(foundState);
       navigate.setOptions({
         title:
@@ -75,12 +77,14 @@ const LocalTabSection = ({ route }) => {
   const loadPhonesByStateId = async (cats, state) => {
     try {
       const phons = await getPhonesByStateId(state.id);
-      setOriginalPhones(phons);
       // console.log('PHONS => ', phons);
-      const filter = phons.filter((item) => item.category_id == cats.id);
+      setOriginalPhones(phons);
+      const filter = phons.filter((item) => item.category_id === cats.id);
       setPhones(filter);
     } catch (error) {
       console.log('ERROR => ', error);
+    } finally {
+      setLoadingPhone(false);
     }
   };
 
@@ -108,13 +112,27 @@ const LocalTabSection = ({ route }) => {
   const handleSearch = (text) => {
     setSearchText(text);
     if (!text) {
-      setPhones(originalPhones);
+      console.log('SETPHONES => ');
+      setPhones([]);
       return;
     }
     const filtered = originalPhones.filter((item) =>
       textIncludesInFields(item, text)
     );
     setPhones(filtered);
+  };
+
+  const handleReset = async () => {
+    console.log('HANDLE RESET => ');
+    setSearchText('');
+    setLoadingPhone(true);
+    // setPhones([]);
+    await loadPhonesByStateId(selectedCategory, {
+      id: user.state_id,
+    });
+    setLoadingPhone(false);
+    // console.log('PHONS => ', phons);
+    // setPhones(phons);
   };
 
   const handleConfirm = async (item) => {
@@ -175,8 +193,11 @@ const LocalTabSection = ({ route }) => {
         ) : (
           <LocalSearch
             value={searchText}
-            setValue={() => setSearchText('')}
+            setValue={() => {
+              setSearchText('');
+            }}
             onChange={handleSearch}
+            onReset={handleReset}
             loading={loadingPhone}
           />
         )}

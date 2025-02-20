@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { colors } from '../config/theme';
 import { ThemeContext } from '../context/ThemeContext';
 import { useContext } from 'react';
-import EmptyData from '../assets/svgs/EmptyData';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const EmptyScreen = ({ navigation, route }) => {
   const { theme } = useContext(ThemeContext);
@@ -15,29 +15,25 @@ const EmptyScreen = ({ navigation, route }) => {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'gray',
+        backgroundColor: activeColors.primary,
       }}
     >
-      <View
+      <Icon
+        name="folder-heart-outline"
+        size={180}
+        color={activeColors.accent}
+        style={{ marginRight: 5 }}
+      />
+      <Text
         style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: activeColors.primary,
+          fontSize: 24,
+          fontWeight: 'bold',
+          color: activeColors.accent,
+          marginBottom: 20,
         }}
       >
-        <EmptyData />
-        <Text
-          style={{
-            fontSize: 24,
-            fontWeight: 'bold',
-            color: activeColors.accent,
-            marginBottom: 20,
-          }}
-        >
-          Sem favoritos no momento
-        </Text>
-      </View>
+        Sem favoritos no momento
+      </Text>
     </View>
   );
 };

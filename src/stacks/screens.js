@@ -21,9 +21,7 @@ const CreateStacks = () => {
   let activeColors = colors[theme.mode];
   const { user } = useContext(UserContext);
 
-  console.log('CREATE STACKS USER=> ', user);
-
-  if (!user) return null; // Garante que não tente renderizar antes do carregamento
+  if (!user) return null;
 
   const screenOptions = {
     headerBackTitle: 'Voltar',
@@ -78,7 +76,11 @@ const CreateStacks = () => {
             component={Main}
             options={{ headerShown: false }}
           />
-          <MainStack.Screen name="DetailContact" component={DetailContact} />
+          <MainStack.Screen
+            name="DetailContact"
+            component={DetailContact}
+            options={{ headerShown: true, title: '' }}
+          />
         </>
       )}
     </MainStack.Navigator>

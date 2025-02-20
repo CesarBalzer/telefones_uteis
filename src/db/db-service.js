@@ -1,15 +1,14 @@
 import { enablePromise, openDatabase } from 'react-native-sqlite-storage';
-import CategoriesMock from '../data/CategoriesMock';
-import StatesMock from '../data/StatesMock';
-import PhonesMock from '../data/PhonesMock';
+
 enablePromise(true);
 
 export const getDBConnection = async () => {
   return openDatabase(
-    { name: 'telefones_uteis.db', location: 'default' },
-    (res) => {},
+    "telefones_uteis.db", "2.0", "TelefonesUteis", 200000,
+    // { name: 'telefones_uteis.db', location: 'default' },
+    () => console.log('✅ Banco de dados conectado!'),
     (error) => {
-      console.error(error);
+      console.error('❌ Erro ao conectar ao banco:', error);
       throw Error('Could not connect to database');
     }
   );
@@ -17,13 +16,10 @@ export const getDBConnection = async () => {
 
 export const isDatabaseInitialized = async () => {
   try {
-    // console.log('Checking if database is initialized...');
     const db = await getDBConnection();
-    // console.log('Database connection:', db);
     const [result] = await db.executeSql(
       "SELECT name FROM sqlite_master WHERE type='table' AND name='user'"
     );
-    // console.log('Query result:', result);
     return result.rows.length > 0;
   } catch (error) {
     console.error('Error checking database:', error);
@@ -31,135 +27,42 @@ export const isDatabaseInitialized = async () => {
   }
 };
 
-const createTables = async (db, queries) => {
-  for (const query of queries) {
-    try {
-      await db.executeSql(query);
-    } catch (error) {
-      console.error('Error executing query:', query, error);
-      throw new Error(`Failed to execute query: ${query}`);
-    }
-  }
-};
-
-export const populateTables = async () => {
+export const createTables = async () => {
   const db = await getDBConnection();
 
-  const queries = await createTablesQueries(db);
-  await createTables(db, queries);
-
-  try {
-    await populateCategories(db, CategoriesMock);
-    await populateStates(db, StatesMock);
-    await populatePhones(db, PhonesMock);
-  } catch (error) {
-    console.error(error);
-    throw new Error('Failed to populate tables');
-  }
-};
-
-const populateCategories = async (db, categories) => {
-  for (const category of categories) {
-    const { name, active, icon } = category;
-    await db.executeSql(
-      'INSERT INTO category (name, active, icon) VALUES (?, ?, ?)',
-      [name, active, icon]
-    );
-  }
-};
-
-const populateStates = async (db, states) => {
-  for (const state of states) {
-    const { name, acronym, icon } = state;
-    await db.executeSql(
-      'INSERT INTO state (name, acronym, icon) VALUES (?, ?, ?)',
-      [name, acronym, icon]
-    );
-  }
-};
-
-const populatePhones = async (db, phones) => {
-  for (const phone of phones) {
-    const {
-      title,
-      ddd,
-      number,
-      description,
-      icon,
-      active,
-      favored,
-      category_id,
-      state_id,
-    } = phone;
-    await db.executeSql(
-      'INSERT INTO phone (title, ddd, number, description, icon, active, favored, category_id, state_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [
-        title,
-        ddd,
-        number,
-        description,
-        icon,
-        active,
-        favored,
-        category_id,
-        state_id,
-      ]
-    );
-  }
-};
-
-export const createTablesQueries = async (db) => {
-  const userTableQuery = `
-    CREATE TABLE IF NOT EXISTS user(
-      id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  const queries = [
+    `CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY,
       name TEXT,
       email TEXT UNIQUE,
-      birthday TEXT,
+      email_verified_at TEXT,
       password TEXT,
-      state_id INTEGER,
-      FOREIGN KEY (state_id) REFERENCES state(id)
-    )
-  `;
+      created_at TEXT,
+      updated_at TEXT
+    )`,
 
-  const categoryTableQuery = `
-    CREATE TABLE IF NOT EXISTS category(
-      id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    `CREATE TABLE IF NOT EXISTS states (
+      id INTEGER PRIMARY KEY,
       name TEXT,
-      active INTEGER DEFAULT 1,
-      icon TEXT
-    )
-  `;
-
-  const stateTableQuery = `
-    CREATE TABLE IF NOT EXISTS state(
-      id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-      name TEXT,
-      acronym TEXT,
-      icon TEXT
-    )
-  `;
-
-  const phoneTableQuery = `
-    CREATE TABLE IF NOT EXISTS phone(
-      id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-      title TEXT,
-      ddd TEXT,
-      number TEXT,
-      description TEXT,
+      acronym TEXT UNIQUE,
       icon TEXT,
       active INTEGER DEFAULT 1,
-      favored INTEGER DEFAULT 0,
-      category_id INTEGER,
-      state_id INTEGER,
-      FOREIGN KEY (category_id) REFERENCES category(id),
-      FOREIGN KEY (state_id) REFERENCES state(id)
-    )
-  `;
+      created_at TEXT,
+      updated_at TEXT
+    )`,
 
-  const contactTableQuery = `
-    CREATE TABLE IF NOT EXISTS contact(
-      id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-      record_id TEXT,
+    `CREATE TABLE IF NOT EXISTS categories (
+      id INTEGER PRIMARY KEY,
+      name TEXT,
+      active INTEGER DEFAULT 1,
+      icon TEXT,
+      created_at TEXT,
+      updated_at TEXT
+    )`,
+
+    `CREATE TABLE IF NOT EXISTS contacts (
+      id INTEGER PRIMARY KEY,
+      record_id TEXT UNIQUE,
       given_name TEXT,
       family_name TEXT,
       middle_name TEXT,
@@ -168,21 +71,88 @@ export const createTablesQueries = async (db) => {
       company TEXT,
       job_title TEXT,
       department TEXT,
-      email_addresses TEXT,
-      phone_numbers TEXT,
-      postal_addresses TEXT,
       birthday TEXT,
-      im_addresses TEXT,
-      is_starred INTEGER DEFAULT 0,
-      thumbnail_path TEXT
-    )
-  `;
+      notes TEXT,
+      thumbnail_path TEXT,
+      is_public INTEGER DEFAULT 0, -- BOOLEANO (0 = false, 1 = true)
+      user_id INTEGER,
+      created_at TEXT,
+      updated_at TEXT,
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    )`,
 
-  return [
-    userTableQuery,
-    categoryTableQuery,
-    stateTableQuery,
-    phoneTableQuery,
-    contactTableQuery,
+    `CREATE TABLE IF NOT EXISTS phones (
+      id INTEGER PRIMARY KEY,
+      title TEXT,
+      ddd TEXT,
+      number TEXT,
+      description TEXT,
+      icon TEXT,
+      active INTEGER DEFAULT 1,
+      category_id INTEGER,
+      contact_id INTEGER,
+      state_id INTEGER,
+      created_at TEXT,
+      updated_at TEXT,
+      FOREIGN KEY (category_id) REFERENCES categories(id),
+      FOREIGN KEY (contact_id) REFERENCES contacts(id) ON DELETE CASCADE,
+      FOREIGN KEY (state_id) REFERENCES states(id) ON DELETE CASCADE
+    )`,
+
+    `CREATE TABLE IF NOT EXISTS contact_addresses (
+      id INTEGER PRIMARY KEY,
+      street TEXT,
+      city TEXT,
+      state TEXT,
+      postal_code TEXT,
+      country TEXT,
+      label TEXT,
+      contact_id INTEGER,
+      created_at TEXT,
+      updated_at TEXT,
+      FOREIGN KEY (contact_id) REFERENCES contacts(id) ON DELETE CASCADE
+    )`,
+
+    `CREATE TABLE IF NOT EXISTS contact_emails (
+      id INTEGER PRIMARY KEY,
+      contact_id INTEGER,
+      email TEXT UNIQUE,
+      label TEXT,
+      created_at TEXT,
+      updated_at TEXT,
+      FOREIGN KEY (contact_id) REFERENCES contacts(id) ON DELETE CASCADE
+    )`,
+
+    `CREATE TABLE IF NOT EXISTS contact_ims (
+      id INTEGER PRIMARY KEY,
+      im_service TEXT,
+      im_username TEXT,
+      contact_id INTEGER,
+      created_at TEXT,
+      updated_at TEXT,
+      FOREIGN KEY (contact_id) REFERENCES contacts(id) ON DELETE CASCADE
+    )`,
+
+    `CREATE TABLE IF NOT EXISTS user_favorites (
+      id INTEGER PRIMARY KEY,
+      user_id INTEGER,
+      phone_id INTEGER,
+      created_at TEXT,
+      updated_at TEXT,
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+      FOREIGN KEY (phone_id) REFERENCES phones(id) ON DELETE CASCADE
+    )`,
+
+    `CREATE TABLE IF NOT EXISTS sync_info (
+      id INTEGER PRIMARY KEY DEFAULT 1,
+      last_sync TEXT
+    )`,
   ];
+
+  try {
+    await Promise.all(queries.map((query) => db.executeSql(query)));
+    console.log('✅ Tabelas criadas com sucesso!');
+  } catch (error) {
+    console.error('❌ Erro ao criar tabelas:', error);
+  }
 };

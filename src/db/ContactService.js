@@ -6,7 +6,7 @@ export const getContacts = async () => {
   return new Promise(async (resolve, reject) => {
     (await db).transaction((tx) => {
       tx.executeSql(
-        'SELECT * FROM contact ORDER BY given_name ASC',
+        'SELECT * FROM contacts ORDER BY given_name ASC',
         [],
         (_, results) => {
           const contacts = [];
@@ -28,7 +28,7 @@ export const getContactById = async (id) => {
   return new Promise(async (resolve, reject) => {
     (await db).transaction((tx) => {
       tx.executeSql(
-        'SELECT * FROM contact WHERE id = ?',
+        'SELECT * FROM contacts WHERE id = ?',
         [id],
         (_, results) => {
           if (results.rows.length > 0) {
@@ -61,7 +61,7 @@ export const addContact = async (contact) => {
 
     (await db).transaction((tx) => {
       tx.executeSql(
-        `INSERT INTO contact (
+        `INSERT INTO contacts (
           record_id, given_name, family_name, phone_numbers, email_addresses, thumbnail_path
         ) VALUES (?, ?, ?, ?, ?, ?)`,
         [
@@ -102,7 +102,7 @@ export const updateContact = async (id, updatedContact) => {
 
     (await db).transaction((tx) => {
       tx.executeSql(
-        `UPDATE contact SET 
+        `UPDATE contacts SET 
           given_name = ?, family_name = ?, phone_numbers = ?, email_addresses = ?, thumbnail_path = ?
         WHERE id = ?`,
         [given_name, family_name, phoneJson, emailJson, thumbnail_path, id],
@@ -128,7 +128,7 @@ export const removeContact = async (id) => {
   return new Promise(async (resolve, reject) => {
     (await db).transaction((tx) => {
       tx.executeSql(
-        'DELETE FROM contact WHERE id = ?',
+        'DELETE FROM contacts WHERE id = ?',
         [id],
         (_, results) => {
           if (results.rowsAffected > 0) {
@@ -150,7 +150,7 @@ export const searchContactsByName = async (name) => {
   return new Promise(async (resolve, reject) => {
     (await db).transaction((tx) => {
       tx.executeSql(
-        `SELECT * FROM contact WHERE given_name LIKE ? OR family_name LIKE ? ORDER BY given_name ASC`,
+        `SELECT * FROM contacts WHERE given_name LIKE ? OR family_name LIKE ? ORDER BY given_name ASC`,
         [`%${name}%`, `%${name}%`],
         (_, results) => {
           const contacts = [];
@@ -172,7 +172,7 @@ export const removeAllContacts = async () => {
   return new Promise(async (resolve, reject) => {
     (await db).transaction((tx) => {
       tx.executeSql(
-        'DELETE FROM contact',
+        'DELETE FROM contacts',
         [],
         (_, results) => resolve(),
         (_, error) => reject(error)
@@ -185,7 +185,7 @@ export const getContactByRecordId = async (record_id) => {
     return new Promise(async (resolve, reject) => {
       (await db).transaction((tx) => {
         tx.executeSql(
-          'SELECT * FROM contact WHERE record_id = ?',
+          'SELECT * FROM contacts WHERE record_id = ?',
           [record_id],
           (_, results) => {
             if (results.rows.length > 0) resolve(results.rows.item(0));

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const ActionIconSearch = ({ value, setValue }) => {
+const ActionIconSearch = ({ value, setValue, onReset }) => {
   return (
     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
       {value === '' ? (
@@ -13,7 +13,7 @@ const ActionIconSearch = ({ value, setValue }) => {
           style={{ marginRight: 5 }}
         />
       ) : (
-        <TouchableOpacity onPress={setValue}>
+        <TouchableOpacity onPress={onReset}>
           <Icon
             name="close"
             size={30}

@@ -19,6 +19,7 @@ import {
 } from 'react-native-shortcut-custom';
 
 const LocalComponent = ({ data, onEdit }) => {
+  // console.log('DATA => ', data);
   const { theme } = useContext(ThemeContext);
   let activeColors = colors[theme.mode];
   const styles = createStyles(activeColors);

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { colors } from '../config/theme';
 import { ThemeContext } from '../context/ThemeContext';
 import {
@@ -9,15 +9,17 @@ import {
   Image,
   KeyboardAvoidingView,
   StyleSheet,
-  Alert, // Importe o Alert do React Native
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import CustomButton from '../components/Buttons/CustomButton';
 import InputField from '../components/Inputs/InputField';
 import VersionText from '../components/Texts/VersionText';
 import { UserContext } from '../context/UserContext';
+import { syncDatabase } from '../services/SyncService';
+import api from '../../api';
+import StorageService, { store } from '../services/StorageService';
+import { useSync } from '../context/SyncContext';
 
 const LoginScreen = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
@@ -30,23 +32,69 @@ const LoginScreen = ({ navigation }) => {
   });
   const [loading, setLoading] = useState(false);
   const [validationError, setValidationError] = useState('');
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const _usr = await getUser();
-  //     console.log('_USR => ', _usr);
-  //     if (_usr) setUsr(_usr);
-  //   })();
-  // }, []);
+  const { setSyncStatus } = useSync();
 
   const handleSubmit = async () => {
     setLoading(true);
+    setValidationError('');
+
     if (!usr.email || !usr.password) {
       setValidationError('Preencha os campos corretamente!');
       setLoading(false);
       return;
     }
-    setUser({ ...user, logged: true });
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => {
+      console.log('⏳ Tempo limite atingido! Abortando requisição...');
+      controller.abort();
+      setValidationError('Tempo limite atingido. Tente novamente.');
+      setLoading(false);
+    }, 15000); // Timeout de 15 segundos
+
+    try {
+      console.log('🔑 Autenticando usuário...');
+      const response = await api.auth.login(usr.email, usr.password, {
+        signal: controller.signal,
+      });
+      console.log('✅ Usuário autenticado:');
+      await store('token', response.token);
+      setUser({ ...user, logged: true });
+
+      clearTimeout(timeout);
+
+      let syncSuccess = false;
+      const syncTimeout = setTimeout(() => {
+        console.log('⏳ Sincronização demorando muito! Abortando...');
+        syncSuccess = true;
+        setValidationError('Sincronização falhou. Tente novamente.');
+        setLoading(false);
+      }, 20000); // Timeout de 20 segundos para sincronização
+
+      while (!syncSuccess) {
+        try {
+          console.log('🔄 Iniciando sincronização...');
+          await syncDatabase(setSyncStatus);
+          console.log('✅ Sincronização concluída com sucesso!');
+          syncSuccess = true;
+          clearTimeout(syncTimeout);
+          
+        } catch (syncError) {
+          console.log('❌ Erro na sincronização:', syncError);
+          await new Promise((resolve) => setTimeout(resolve, 3000)); // Tenta novamente a cada 3s
+        }
+      }
+    } catch (error) {
+      console.log('❌ Erro ao fazer login:', error);
+      if (error.name === 'AbortError') {
+        setValidationError('A conexão demorou muito e foi cancelada.');
+      } else {
+        setValidationError('Erro ao autenticar. Verifique suas credenciais.');
+      }
+    } finally {
+      clearTimeout(timeout);
+      setLoading(false);
+    }
   };
 
   return (

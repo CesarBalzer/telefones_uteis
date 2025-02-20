@@ -9,7 +9,7 @@ const States = ({ selected, colors, onPress }) => {
       y="0px"
       width="100%"
       height="100%"
-      viewBox="0 70 450 300"
+      viewBox="0 40 450 300"
       xmlSpace="preserve"
     >
       <Path

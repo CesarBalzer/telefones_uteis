@@ -13,7 +13,7 @@ const Controls = ({ adjustZoom }) => {
   return (
     <View style={styles.zoomControls}>
       <CustomButton
-        type="outlined"
+        type="invert"
         size="small"
         shape="circle"
         onPress={() => adjustZoom(-0.2)}
@@ -21,7 +21,7 @@ const Controls = ({ adjustZoom }) => {
         icon={<Icon name="minus" size={32} color={activeColors.text} />}
       />
       <CustomButton
-        type="outlined"
+        type="invert"
         size="small"
         shape="circle"
         onPress={() => adjustZoom(0.2)}

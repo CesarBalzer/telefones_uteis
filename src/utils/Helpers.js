@@ -28,7 +28,6 @@ export const normalizeText = (text) => {
   if (typeof text !== 'string') {
     return '';
   }
-  console.log('TEXT => ', text);
   return text
     .toLowerCase()
     .normalize('NFD')

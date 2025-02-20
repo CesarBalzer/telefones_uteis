@@ -6,7 +6,7 @@ export const getCategories = async () => {
   return new Promise(async (resolve, reject) => {
     (await db).transaction((tx) => {
       tx.executeSql(
-        'SELECT * FROM category',
+        'SELECT * FROM categories',
         [],
         (_, results) => {
           const categories = [];
@@ -28,7 +28,7 @@ export const getCategoryById = async (id) => {
   return new Promise(async (resolve, reject) => {
     (await db).transaction((tx) => {
       tx.executeSql(
-        'SELECT * FROM category WHERE id = ?',
+        'SELECT * FROM categories WHERE id = ?',
         [id],
         (_, results) => {
           if (results.rows.length > 0) {
@@ -52,7 +52,7 @@ export const addCategory = async (category) => {
   return new Promise(async (resolve, reject) => {
     (await db).transaction((tx) => {
       tx.executeSql(
-        'INSERT INTO category (title, description, icon) VALUES (?, ?, ?)',
+        'INSERT INTO categories (title, description, icon) VALUES (?, ?, ?)',
         [category.title, category.description, category.icon],
         (_, results) => {
           if (results.rowsAffected > 0) {
@@ -77,7 +77,7 @@ export const editCategory = async (id, newCategory) => {
       const { title, description, icon } = newCategory;
 
       tx.executeSql(
-        'UPDATE category SET title = ?, description = ?, icon = ? WHERE id = ?',
+        'UPDATE categories SET title = ?, description = ?, icon = ? WHERE id = ?',
         [title, description, icon, id],
         (_, results) => {
           if (results.rowsAffected > 0) {
@@ -101,7 +101,7 @@ export const removeCategory = async (id) => {
   return new Promise(async (resolve, reject) => {
     (await db).transaction((tx) => {
       tx.executeSql(
-        'DELETE FROM category WHERE id = ?',
+        'DELETE FROM categories WHERE id = ?',
         [id],
         (_, results) => {
           if (results.rowsAffected > 0) {
@@ -123,7 +123,7 @@ export const getPhonesWithCategories = async () => {
   return new Promise(async (resolve, reject) => {
     (await db).transaction((tx) => {
       tx.executeSql(
-        'SELECT phone.*, category.name as category_name FROM phone LEFT JOIN category ON phone.category_id = category.id',
+        'SELECT phone.*, category.name as category_name FROM phones LEFT JOIN categories ON phone.category_id = category.id',
         [],
         (_, results) => {
           const phonesWithCategories = [];

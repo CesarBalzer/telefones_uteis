@@ -88,7 +88,7 @@ const InstructionModal = ({ onConfirm, buttonEnabled, setButtonEnabled }) => {
           label={
             buttonEnabled
               ? 'Entendido, vamos continuar!'
-              : 'Aguarde as instruções...'
+              : 'Aguardando sincronização...'
           }
           onPress={onConfirm}
           iconPosition="right"

@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -14,7 +14,7 @@ import SkelletonPhoneItem from '../../skeletons/SkelletonPhoneItem';
 import SkelletonInputSearch from '../../skeletons/SkelletonInputSearch';
 import { useModal } from '../../context/ModalContext';
 import PhoneModal from '../Modals/PhoneModal';
-import { updatePhone, getPhonesFavoreds } from '../../db/PhoneService';
+import FavoriteService from '../../db/FavoriteService';
 import EmptyScreen from '../../screens/EmptyScreen';
 import { getAll } from 'react-native-contacts';
 import { normalizeText } from '../../utils/Helpers';
@@ -31,20 +31,21 @@ const FavoredsTabSection = ({ route }) => {
   const { openModal, closeModal } = useModal();
 
   useEffect(() => {
-    (async () => {
-      await loadPhones();
-    })();
+    loadFavorites();
   }, []);
 
-  const loadPhones = async () => {
+  const loadFavorites = async () => {
     try {
-      const phons = await getPhonesFavoreds();
+      setLoadingPhone(true);
+      
+      const userId = 1; // Substituir pelo ID do usuário logado
+      const dbFavorites = await FavoriteService.getFavoritesByUserId(userId);
       const allContacts = await getAll();
       const starredContacts = allContacts.filter(
         (contact) => contact.isStarred
       );
 
-      const phonsz = starredContacts
+      const phoneContacts = starredContacts
         .map((contact) => {
           return contact.phoneNumbers.map((phone) => ({
             active: 1,
@@ -60,12 +61,15 @@ const FavoredsTabSection = ({ route }) => {
         })
         .flat();
 
-      const merge = [...phons, ...phonsz];
+      const mergedFavorites = [...dbFavorites, ...phoneContacts];
 
-      setPhones(merge);
-      setOriginalPhones(merge);
+      setPhones(mergedFavorites);
+      setOriginalPhones(mergedFavorites);
+      
     } catch (error) {
       console.log('ERROR => ', error);
+    } finally {
+      setLoadingPhone(false);
     }
   };
 
@@ -77,7 +81,6 @@ const FavoredsTabSection = ({ route }) => {
     );
   };
 
-  // const handleSearch = (arrayToSearch, arrayResultSearch,arrayParamsToSearch, text) => {}
   const handleSearch = (text) => {
     setSearchText(text);
     if (!text) {
@@ -94,16 +97,16 @@ const FavoredsTabSection = ({ route }) => {
     console.log('HANDLECONFIRM => ', item);
     setLoading(true);
     try {
-      await updatePhone(item.id, item);
-      await loadPhones();
+      await FavoriteService.removeFavorite(1, item.id);
+      await loadFavorites();
       setTimeout(() => {
         setLoading(false);
         closeModal();
-      }, 3000);
+      }, 1000);
     } catch (error) {
       setLoading(false);
       closeModal();
-      console.log('ERROR UPDATE PHONE=> ', error);
+      console.log('ERROR REMOVE FAVORITE => ', error);
     }
   };
 
@@ -115,7 +118,7 @@ const FavoredsTabSection = ({ route }) => {
 
   const handleIconSearch = () => {
     setSearchText('');
-    loadPhones();
+    loadFavorites();
   };
 
   const ActionIconSearch = ({ value, loading }) => {
@@ -125,7 +128,6 @@ const FavoredsTabSection = ({ route }) => {
           <ActivityIndicator
             size={'small'}
             color={activeColors.accent}
-            style={{}}
           />
         ) : value == '' ? (
           <Icon
@@ -152,16 +154,12 @@ const FavoredsTabSection = ({ route }) => {
     <View style={styles.container}>
       <View style={styles.containerSearch}>
         {loading ? (
-          <>
-            <SkelletonInputSearch />
-          </>
+          <SkelletonInputSearch />
         ) : (
           <InputSearch
             selectionColor={activeColors.tint}
             label={'Pesquisar...'}
-            icon={
-              <ActionIconSearch value={searchText} loading={loadingPhone} />
-            }
+            icon={<ActionIconSearch value={searchText} loading={loadingPhone} />}
             keyboardType={'name-phone-pad'}
             onChangeText={handleSearch}
             value={searchText}
@@ -181,7 +179,7 @@ const FavoredsTabSection = ({ route }) => {
 };
 
 const createStyles = (colors) => {
-  const styles = StyleSheet.create({
+  return StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: colors.primary,
@@ -197,7 +195,6 @@ const createStyles = (colors) => {
       borderRadius: 10,
     },
   });
-  return styles;
 };
 
 export default FavoredsTabSection;

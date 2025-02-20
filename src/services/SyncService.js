@@ -124,9 +124,9 @@ const updateLocalDatabase = async (db, data) => {
     const tables = [
       { name: 'users', items: Array.isArray(data.users) ? data.users : [data.users], query: `INSERT OR REPLACE INTO users (id, name, email, email_verified_at, password, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)` },
       { name: 'states', items: data.states, query: `INSERT OR REPLACE INTO states (id, name, acronym, icon, active, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)` },
-      { name: 'categories', items: data.categories, query: `INSERT OR REPLACE INTO categories (id, name, icon, active, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)` },
+      { name: 'categories', items: data.categories, query: `INSERT OR REPLACE INTO categories (id, name, active, icon, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)` },
       { name: 'contacts', items: data.contacts, query: `INSERT OR REPLACE INTO contacts (id, record_id, given_name, family_name, middle_name, prefix, suffix, company, job_title, department, birthday, notes, thumbnail_path, is_public, user_id, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)` },
-      { name: 'contact_emails', items: data.contactEmails, query: `INSERT OR REPLACE INTO contact_emails (id, contact_id, email, label, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)` },
+      { name: 'contact_emails', items: data.contactEmails, query: `INSERT OR REPLACE INTO contact_emails (id, email, label, contact_id created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)` },
       { name: 'contact_addresses', items: data.contactAddresses, query: `INSERT OR REPLACE INTO contact_addresses (id, street, city, state, postal_code, country, label, contact_id, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)` },
       { name: 'contact_ims', items: data.contactIMs, query: `INSERT OR REPLACE INTO contact_ims (id, im_service, im_username, contact_id, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)` },
       { name: 'user_favorites', items: data.userFavorites, query: `INSERT OR REPLACE INTO user_favorites (id, user_id, phone_id, created_at, updated_at) VALUES (?, ?, ?, ?, ?)` },

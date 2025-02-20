@@ -12,7 +12,12 @@ const DynamicSelectDropdown = ({
   select,
   label,
 }) => {
-  // console.log('SELECTED => ', selected);
+console.log('DYNAMICSELECTDROPDOWN => ',   data,
+  emptyTitle,
+  onSelect,
+  selected,
+  select,
+  label,);
   const { theme } = useContext(ThemeContext);
   let activeColors = colors[theme.mode];
   const styles = createStyles(activeColors);

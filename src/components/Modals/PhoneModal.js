@@ -32,7 +32,7 @@ import { getCategories } from '../../db/CategoryService';
 import { getStates } from '../../db/StateService';
 
 const PhoneModal = ({ data, onConfirm }) => {
-  // console.log('PHONE MODAL => ', data);
+  console.log('PHONE MODAL => ', data);
   const { theme } = useContext(ThemeContext);
   let activeColors = colors[theme.mode];
   const styles = createStyles(activeColors);
@@ -66,19 +66,19 @@ const PhoneModal = ({ data, onConfirm }) => {
     }
   }, [phone]);
 
-  useEffect(() => {
-    const filteredCategories = categories.filter(
-      (item) => item.id === data.category_id
-    );
-    filteredCategories.length
-      ? setSelectedCategory(filteredCategories[0])
-      : setSelectedCategory(null);
+  // useEffect(() => {
+  //   const filteredCategories = categories.filter(
+  //     (item) => item.id === data.category_id
+  //   );
+  //   filteredCategories.length
+  //     ? setSelectedCategory(filteredCategories[0])
+  //     : setSelectedCategory(null);
 
-    const filteredStates = states.filter((item) => item.id === data.state_id);
-    filteredStates.length
-      ? setSelectedState(filteredStates[0])
-      : setSelectedState(null);
-  }, []);
+  //   const filteredStates = states.filter((item) => item.id === data.state_id);
+  //   filteredStates.length
+  //     ? setSelectedState(filteredStates[0])
+  //     : setSelectedState(null);
+  // }, []);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -120,10 +120,11 @@ const PhoneModal = ({ data, onConfirm }) => {
       setImagePaths(files);
 
       const fetchCategories = await getCategories();
+      console.log('FETCH CATEGORIES => ', fetchCategories);
       setCategories(fetchCategories);
 
-      const fetchStates = await getStates();
-      setStates(fetchStates);
+      // const fetchStates = await getStates();
+      // setStates(fetchStates);
     } catch {
       Alert.alert('Erro', 'Não foi possível listar os ícones.');
     }
@@ -178,34 +179,32 @@ const PhoneModal = ({ data, onConfirm }) => {
       return;
     }
 
-    console.log('CREATEPHONESHORTCUT => ', data);
+    console.log('CREATE PHONE SHORTCUT => ', data);
 
-    return;
+    const removeFileExtension = (filename) => {
+      return filename.split('.').slice(0, -1).join('.');
+    };
 
-    // const removeFileExtension = (filename) => {
-    //   return filename.split('.').slice(0, -1).join('.');
-    // };
+    try {
+      const shortcutId = Date.now().toString();
+      const iconName = removeFileExtension(data.icon || 'default');
 
-    // try {
-    //   const shortcutId = Date.now().toString();
-    //   const iconName = removeFileExtension(data.icon || 'default');
+      const result = await addShortcutToScreen({
+        id: shortcutId,
+        phoneNumber: data.number,
+        shortLabel: data.description || data.title,
+        longLabel: data.title,
+        iconFolderName: 'icons',
+        iconName: iconName,
+      });
 
-    //   const result = await addShortcutToScreen({
-    //     id: shortcutId,
-    //     phoneNumber: data.number,
-    //     shortLabel: data.description || data.title,
-    //     longLabel: data.title,
-    //     iconFolderName: 'icons',
-    //     iconName: iconName,
-    //   });
-
-    //   setModalVisible(false);
-    //   Alert.alert('Sucesso', 'Atalho criado com sucesso!');
-    //   console.log('RESULT => ', result);
-    // } catch (error) {
-    //   console.log('Erro ao criar atalho:', error);
-    //   Alert.alert('Erro', 'Erro ao criar atalho.');
-    // }
+      setModalVisible(false);
+      Alert.alert('Sucesso', 'Atalho criado com sucesso!');
+      console.log('RESULT => ', result);
+    } catch (error) {
+      console.log('Erro ao criar atalho:', error);
+      Alert.alert('Erro', 'Erro ao criar atalho.');
+    }
   };
 
   const openAppSettings = () => {

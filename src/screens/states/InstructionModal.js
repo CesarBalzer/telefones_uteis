@@ -87,7 +87,7 @@ const InstructionModal = ({ onConfirm, buttonEnabled, setButtonEnabled }) => {
           disabled={!buttonEnabled}
           label={
             buttonEnabled
-              ? 'Entendido, vamos continuar!'
+              ? 'Ok, vamos continuar!'
               : 'Aguardando sincronização...'
           }
           onPress={onConfirm}

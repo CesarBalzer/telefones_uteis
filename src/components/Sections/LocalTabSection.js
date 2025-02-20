@@ -185,7 +185,7 @@ const LocalTabSection = ({ route }) => {
         />
       </View>
 
-      <View>
+      <View style={{paddingBottom:15}}>
         {loading ? (
           <>
             <SkelletonInputSearch />

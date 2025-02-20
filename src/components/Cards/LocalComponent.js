@@ -19,7 +19,6 @@ import {
 } from 'react-native-shortcut-custom';
 
 const LocalComponent = ({ data, onEdit }) => {
-  // console.log('DATA => ', data);
   const { theme } = useContext(ThemeContext);
   let activeColors = colors[theme.mode];
   const styles = createStyles(activeColors);
@@ -178,7 +177,7 @@ const createStyles = (colors) => {
       borderRadius: 10,
       flexDirection: 'row',
       marginHorizontal: 10,
-      marginVertical: 6,
+      marginVertical: 5,
     },
     containerImage: {
       justifyContent: 'center',

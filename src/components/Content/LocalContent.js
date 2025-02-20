@@ -4,10 +4,7 @@ import LocalComponent from '../Cards/LocalComponent';
 
 const LocalContent = ({ data, handleEdit }) => {
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={true}
-      contentContainerStyle={{ flexGrow: 1, paddingBottom: 20 }}
-    >
+    <ScrollView vertical showsHorizontalScrollIndicator={false}>
       {data.map((item, index) => (
         <LocalComponent key={index} data={item} onEdit={handleEdit} />
       ))}

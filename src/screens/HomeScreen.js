@@ -19,20 +19,7 @@ const HomeScreens = ({ navigation, route }) => {
     }, 2000);
   };
 
-  return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      style={styles.container}
-      contentContainerStyle={{ flexGrow: 1 }}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }
-    >
-      <View style={{ flexGrow: 1 }}>
-        <StatesTabSection />
-      </View>
-    </ScrollView>
-  );
+  return <StatesTabSection />;
 };
 const createStyles = (colors) => {
   const styles = StyleSheet.create({

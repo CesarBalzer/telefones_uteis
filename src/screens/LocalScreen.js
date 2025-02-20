@@ -19,22 +19,7 @@ const MyLocalScreen = ({ route, navigation }) => {
     setRefreshing(false);
   };
 
-  return (
-    <ScrollView
-      automaticallyAdjustKeyboardInsets={true}
-      showsVerticalScrollIndicator={false}
-      style={styles.container}
-      contentContainerStyle={{ flexGrow: 1 }}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }
-    >
-      <View style={{ flexGrow: 1 }}>
-        <LocalTabSection route={route} />
-        {/* <Bottomsheet /> */}
-      </View>
-    </ScrollView>
-  );
+  return <LocalTabSection route={route} />;
 };
 const createStyles = (colors) => {
   const styles = StyleSheet.create({

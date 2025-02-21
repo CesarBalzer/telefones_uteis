@@ -89,6 +89,7 @@ const StatesTabSection = ({ route, navigation }) => {
 
   const loadPhones = async (cats) => {
     const phons = await getPhones();
+    console.log('LOADPHONES => ', phons);
     setPhones(phons);
 
     if (user && user.state_id) {

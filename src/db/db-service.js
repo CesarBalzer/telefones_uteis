@@ -35,8 +35,8 @@ export const createTables = async () => {
       id INTEGER PRIMARY KEY,
       name TEXT,
       email TEXT UNIQUE,
+      is_admin INTEGER DEFAULT 1,
       email_verified_at TEXT,
-      password TEXT,
       created_at TEXT,
       updated_at TEXT
     )`,
@@ -145,7 +145,8 @@ export const createTables = async () => {
 
     `CREATE TABLE IF NOT EXISTS sync_info (
       id INTEGER PRIMARY KEY DEFAULT 1,
-      last_sync TEXT
+      last_sync TEXT,
+      previous_sync TEXT
     )`,
   ];
 

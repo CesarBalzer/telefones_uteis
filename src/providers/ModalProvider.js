@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext } from 'react';
-import { View, Text, TouchableOpacity, Modal, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Modal, StyleSheet, StatusBar } from 'react-native';
 import { colors } from '../config/theme';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ThemeContext } from '../context/ThemeContext';
@@ -29,29 +29,18 @@ const ModalProvider = ({ children }) => {
   return (
     <ModalContext.Provider value={{ isOpen, setIsOpen, openModal, closeModal }}>
       {children}
-      <Modal
-        visible={isOpen}
-        animationType="fade"
-        presentationStyle="formSheet"
-      >
+      <Modal visible={isOpen} animationType="fade" transparent={false}>
         <View style={styles.modalOverlay}>
+          <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
+
           <View style={styles.modalContent}>
+            <TouchableOpacity onPress={closeModal} style={styles.closeIcon}>
+              <Icon name="close" size={48} color={activeColors.primary} />
+            </TouchableOpacity>
+
             <View style={styles.content}>
-              <View style={styles.contentHeader}>
-                <Text style={styles.contentTitle}>{modalTitle}</Text>
-                <TouchableOpacity onPress={closeModal} style={styles.closeIcon}>
-                  <Text style={styles.closeIconText}>
-                    <Icon
-                      name="close"
-                      size={30}
-                      color={activeColors.text}
-                      style={{ marginRight: 5 }}
-                    />
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              <Text style={styles.contentTitle}>{modalTitle}</Text>
               <View style={styles.contentBody}>{modalContent}</View>
-              <View style={styles.contentFooter}></View>
             </View>
           </View>
         </View>
@@ -60,58 +49,47 @@ const ModalProvider = ({ children }) => {
   );
 };
 
-const createStyles = (colors) => {
-  return StyleSheet.create({
+const createStyles = (colors) =>
+  StyleSheet.create({
     modalOverlay: {
       flex: 1,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      width: '100%',
+      height: '100%',
+      backgroundColor: colors.primary,
     },
     modalContent: {
       flex: 1,
-      borderRadius: 10,
+      width: '100%',
+      height: '100%',
+      backgroundColor: colors.accent,
+      borderRadius: 0,
+      padding: 0,
+      margin: 0,
+    },
+    closeIcon: {
+      position: 'absolute',
+      top: 15,
+      right: 15,
+      zIndex: 10,
     },
     content: {
       flex: 1,
-      justifyContent: 'space-between',
-    },
-    contentHeader: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
+      justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: colors.primary,
+      width: '100%',
     },
     contentTitle: {
       fontSize: 22,
-
+      fontWeight: 'bold',
       color: colors.text,
-      marginHorizontal: 20,
-      marginTop: 20,
+      textAlign: 'center',
     },
     contentBody: {
       flex: 1,
-      backgroundColor: colors.primary,
-    },
-    contentFooter: {
-      backgroundColor: 'transparent',
-    },
-    closeIcon: {
-      padding: 10,
-      marginTop: 10,
-    },
-    closeIconText: {
-      fontSize: 18,
-      color: colors.text,
-    },
-    closeButton: {
-      fontSize: 16,
-      color: colors.text,
-      marginTop: 20,
-    },
-    closeText: {
-      fontSize: 18,
-      color: colors.text,
+      width: '100%',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
   });
-};
 
 export default ModalProvider;

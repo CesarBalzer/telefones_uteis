@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import InputField from '../Inputs/InputField';
-import DynamicSelectDropdown from '../Selects/DynamicSelectDropdown';
+import SelectDropdownModal from '../Selects/SelectDropdownModal';
 
 const PhoneForm = ({ phone, onChange }) => (
   <View style={{ padding: 20 }}>
@@ -16,7 +16,7 @@ const PhoneForm = ({ phone, onChange }) => (
       keyboardType="numeric"
       onChange={(text) => onChange('number', text)}
     />
-    <DynamicSelectDropdown
+    <SelectDropdownModal
       data={phone.categories}
       selected={phone.selectedCategory}
       onSelect={(item) => onChange('category', item)}

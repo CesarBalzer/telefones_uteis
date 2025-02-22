@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Image, View, Text, StyleSheet } from 'react-native';
+import { ThemeContext } from '../../context/ThemeContext';
+import { colors } from '../../config/theme';
 
 const Avatar = ({
   img,
@@ -10,6 +12,9 @@ const Avatar = ({
   roundedPlaceholder = true,
   style,
 }) => {
+  const { theme } = useContext(ThemeContext);
+  const activeColors = colors[theme.mode];
+  const styles = createStyles(activeColors);
   const renderImage = () => {
     const { imageContainer, image } = styles;
 
@@ -54,32 +59,32 @@ const Avatar = ({
   );
 };
 
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-  },
-  imageContainer: {
-    overflow: 'hidden',
-    justifyContent: 'center',
-    height: '100%',
-  },
-  image: {
-    flex: 1,
-    alignSelf: 'stretch',
-    width: undefined,
-    height: undefined,
-  },
-  placeholderContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#dddddd',
-    height: '100%',
-  },
-  placeholderText: {
-    fontWeight: '700',
-    color: '#ffffff',
-  },
-});
+const createStyles = (colors) =>
+  StyleSheet.create({
+    container: {
+      width: '100%',
+    },
+    imageContainer: {
+      overflow: 'hidden',
+      justifyContent: 'center',
+      height: '100%',
+    },
+    image: {
+      flex: 1,
+      alignSelf: 'stretch',
+      width: undefined,
+      height: undefined,
+    },
+    placeholderContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: colors.primary,
+      height: '100%',
+    },
+    placeholderText: {
+      fontWeight: '700',
+      color: `${colors.accent}`,
+    },
+  });
 
 export default Avatar;

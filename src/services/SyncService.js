@@ -1,6 +1,5 @@
 import { getDBConnection } from '../db/db-service';
 import api from '../../api';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const getLastSyncTimes = async (db) => {
   return new Promise((resolve) => {
@@ -262,29 +261,29 @@ const chunkInsertContacts = async (
             }
 
             // Inserir Favoritos
-            if (contact.user_favorites) {
-              contact.user_favorites.forEach((favorite) => {
-                tx.executeSql(
-                  `INSERT OR REPLACE INTO user_favorites (id, user_id, phone_id, created_at, updated_at) 
-                   VALUES (?, ?, ?, ?, ?)`,
-                  [
-                    favorite.id || null,
-                    favorite.user_id || null,
-                    favorite.phone_id || null,
-                    favorite.created_at || new Date().toISOString(),
-                    favorite.updated_at || new Date().toISOString(),
-                  ],
-                  () => {
-                    totalFavoritesInserted++;
-                  },
-                  (_, error) =>
-                    console.log(
-                      `❌ Erro ao inserir favorito ID: ${favorite.id}`,
-                      error
-                    )
-                );
-              });
-            }
+            // if (contact.user_favorites) {
+            //   contact.user_favorites.forEach((favorite) => {
+            //     tx.executeSql(
+            //       `INSERT OR REPLACE INTO user_favorites (id, user_id, phone_id, created_at, updated_at) 
+            //        VALUES (?, ?, ?, ?, ?)`,
+            //       [
+            //         favorite.id || null,
+            //         favorite.user_id || null,
+            //         favorite.phone_id || null,
+            //         favorite.created_at || new Date().toISOString(),
+            //         favorite.updated_at || new Date().toISOString(),
+            //       ],
+            //       () => {
+            //         totalFavoritesInserted++;
+            //       },
+            //       (_, error) =>
+            //         console.log(
+            //           `❌ Erro ao inserir favorito ID: ${favorite.id}`,
+            //           error
+            //         )
+            //     );
+            //   });
+            // }
           });
         },
         (error) => {
@@ -334,7 +333,7 @@ const updateLocalDatabase = async (db, data) => {
       },
       {
         name: 'user_favorites',
-        items: Array.isArray(data.userFavorites) ? data.userFavorites : [],
+        items: Array.isArray(data.user_favorites) ? data.user_favorites : [],
         query: `INSERT OR REPLACE INTO user_favorites (id, user_id, phone_id, created_at, updated_at) VALUES (?, ?, ?, ?, ?)`,
       },
     ];

@@ -22,7 +22,7 @@ import { useSync } from '../context/SyncContext';
 import MapScreen from './states/MapScreen';
 
 const StatesScreen = () => {
-  const { user, saveUser, getUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const { theme } = useContext(ThemeContext);
   const { syncStatus, setSyncStatus } = useSync();
   const activeColors = colors[theme.mode];
@@ -117,8 +117,7 @@ const StatesScreen = () => {
     if (syncError || syncStatus.isSyncing) return;
 
     setLoading(true);
-    saveUser({ ...user, state_id: selectedState.id });
-    await getUser();
+    setUser({ ...user, state_id: selectedState.id });
     setTimeout(() => {
       setLoading(false);
       navigation.navigate('Main', { screen: 'Local' });

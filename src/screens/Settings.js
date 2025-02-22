@@ -18,6 +18,8 @@ import CustomButton from '../components/Buttons/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import TextInputMask from 'react-native-text-input-mask';
+import { useSync } from '../context/SyncContext';
+import { syncDatabase } from '../services/SyncService';
 
 const isValidDate = (dateString) => {
   if (!dateString || dateString.length !== 10) return false;
@@ -33,7 +35,7 @@ const isValidDate = (dateString) => {
 
 const SettingsScreen = () => {
   const { theme, updateTheme } = useContext(ThemeContext);
-  const { user, setUser, saveUser } = useContext(UserContext);
+  const { user, setUser, logout } = useContext(UserContext);
   const [usr, setUsr] = useState(user);
   const activeColors = colors[theme.mode];
   const styles = createStyles(activeColors);
@@ -42,8 +44,8 @@ const SettingsScreen = () => {
     user?.birthday ? format(new Date(user.birthday), 'dd/MM/yyyy') : ''
   );
   const navigation = useNavigation();
-
   const [isDarkTheme, setIsDarkTheme] = useState(theme.mode === 'dark');
+  const { syncStatus, setSyncStatus } = useSync();
 
   const toggleTheme = () => {
     updateTheme();
@@ -58,7 +60,7 @@ const SettingsScreen = () => {
 
   useEffect(() => {
     (async () => {
-      saveUser(usr);
+      setUser(usr);
       if (usr?.state_id) {
         const foundState = await getStateById(usr.state_id);
         setState(foundState);
@@ -84,6 +86,16 @@ const SettingsScreen = () => {
         );
         setDob('');
       }
+    }
+  };
+
+  const handleSync = async () => {
+    try {
+      console.log('🔄 Iniciando sincronização...');
+      const sync = await syncDatabase(setSyncStatus);
+      console.log('✅ Sincronização concluída com sucesso!');
+    } catch (syncError) {
+      console.log('❌ Erro na sincronização:', syncError);
     }
   };
 
@@ -176,7 +188,42 @@ const SettingsScreen = () => {
             size="large"
             label="Mudar meu estado"
             onPress={handleState}
-            icon={<Icon name="home-map-marker" size={20} color={activeColors.light} />}
+            icon={
+              <Icon
+                name="home-map-marker"
+                size={20}
+                color={activeColors.light}
+              />
+            }
+          />
+        </View>
+      </View>
+
+      <Text style={styles.sectionTitle}>
+        <Icon name="map-marker-outline" size={20} color={activeColors.accent} />{' '}
+        Sincronização
+      </Text>
+
+      <View style={styles.section}>
+        <View style={styles.buttonContainer}>
+          <CustomButton
+            size="large"
+            label="Sincronizar agora"
+            type="info"
+            onPress={handleSync}
+            icon={<Icon name="sync" size={20} color={activeColors.light} />}
+          />
+        </View>
+      </View>
+
+      <View style={styles.section}>
+        <View style={styles.buttonContainer}>
+          <CustomButton
+            size="large"
+            label="Sair do app"
+            type="success"
+            onPress={logout}
+            icon={<Icon name="logout" size={20} color={activeColors.light} />}
           />
         </View>
       </View>
@@ -202,7 +249,7 @@ const createStyles = (colors) =>
     },
     sectionRow: {
       flexDirection: 'row',
-      justifyContent:'space-between',
+      justifyContent: 'space-between',
       alignItems: 'center',
       backgroundColor: `${colors.accent}15`,
       padding: 15,

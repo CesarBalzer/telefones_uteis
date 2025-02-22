@@ -1,5 +1,5 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
-import { View, FlatList, Text, StyleSheet, Image } from 'react-native';
+import { View, FlatList, Text, StyleSheet } from 'react-native';
 import CategoryLocalCard from '../Cards/CategoryLocalCard';
 import LocalContent from '../Content/LocalContent';
 import { colors } from '../../config/theme';
@@ -89,7 +89,6 @@ const StatesTabSection = ({ route, navigation }) => {
 
   const loadPhones = async (cats) => {
     const phons = await getPhones();
-    console.log('LOADPHONES => ', phons);
     setPhones(phons);
 
     if (user && user.state_id) {
@@ -147,19 +146,32 @@ const StatesTabSection = ({ route, navigation }) => {
   };
 
   const handleCategoryPress = (data) => {
-    if (selectedCategory.id === data.id) return;
+    console.log(
+      'HANDLECATEGORYPRESS => ',
+      data,
+      selectedCategory,
+      selectedState
+    );
+  
+    if (!data) return;
+    
+    if (selectedCategory?.id === data.id) return;
+  
     setLoading(true);
     setSelectedCategory(data);
-
+  
+    const stateId = selectedState?.id ?? user?.state_id;
+  
     const filter = phones.filter(
-      (item) => item.category_id == data.id && item.state_id == selectedState.id
+      (item) => item.category_id == data.id && stateId && item.state_id == stateId
     );
-
+  
     setTimeout(() => {
       setFilteredData(filter);
       setLoading(false);
     }, 500);
   };
+  
 
   const handleSearch = (text) => {
     setSearchText(text);
@@ -231,9 +243,9 @@ const StatesTabSection = ({ route, navigation }) => {
   };
 
   const handleOpenModal = (data) => {
-    console.log('HANDLE OPEN MODAL => ', data);
+    // console.log('HANDLE OPEN MODAL => ', data);
     openModal({
-      content: <PhoneModal data={data} onConfirm={handleConfirm} />,
+      content: <PhoneModal data={data} onConfirm={handleConfirm} user={user} />,
     });
   };
 

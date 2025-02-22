@@ -18,7 +18,7 @@ import VersionText from '../components/Texts/VersionText';
 import { UserContext } from '../context/UserContext';
 import { syncDatabase } from '../services/SyncService';
 import api from '../../api';
-import StorageService, { store } from '../services/StorageService';
+import { storeJson } from '../services/StorageService';
 import { useSync } from '../context/SyncContext';
 
 const LoginScreen = ({ navigation }) => {
@@ -35,6 +35,7 @@ const LoginScreen = ({ navigation }) => {
   const { setSyncStatus } = useSync();
 
   const handleSubmit = async () => {
+    if (loading) return;
     setLoading(true);
     setValidationError('');
 
@@ -50,16 +51,34 @@ const LoginScreen = ({ navigation }) => {
       controller.abort();
       setValidationError('Tempo limite atingido. Tente novamente.');
       setLoading(false);
-    }, 15000); // Timeout de 15 segundos
+    }, 15000);
 
     try {
       console.log('🔑 Autenticando usuário...');
       const response = await api.auth.login(usr.email, usr.password, {
         signal: controller.signal,
       });
+      // console.log('RESPONSE => ', response);
       console.log('✅ Usuário autenticado:');
-      await store('token', response.token);
-      setUser({ ...user, logged: true });
+      if (response.access_token) {
+        await storeJson('access_token', response.access_token);
+      }
+      if (response.refresh_token) {
+        await storeJson('refresh_token', response.refresh_token);
+      }
+
+      console.log('✅ Usuário autenticado e tokens armazenados!');
+
+      setUser({
+        ...user,
+        logged: true,
+        id: response.user.id,
+        name: response.user.name,
+        email: response.user.email,
+        email_verified_at: response.user.email_verified_at,
+        created_at: response.user.created_at,
+        updated_at: response.user.updated_at,
+      });
 
       clearTimeout(timeout);
 
@@ -78,10 +97,9 @@ const LoginScreen = ({ navigation }) => {
           console.log('✅ Sincronização concluída com sucesso!');
           syncSuccess = true;
           clearTimeout(syncTimeout);
-          
         } catch (syncError) {
           console.log('❌ Erro na sincronização:', syncError);
-          await new Promise((resolve) => setTimeout(resolve, 3000)); // Tenta novamente a cada 3s
+          await new Promise((resolve) => setTimeout(resolve, 3000));
         }
       }
     } catch (error) {
@@ -152,7 +170,9 @@ const LoginScreen = ({ navigation }) => {
           ) : null}
           <View style={styles.section}>
             <CustomButton
+              size="large"
               label={'Login'}
+              type='primary'
               onPress={handleSubmit}
               disabled={loading}
               loading={loading}

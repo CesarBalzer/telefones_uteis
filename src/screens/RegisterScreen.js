@@ -48,18 +48,6 @@ const RegisterScreen = ({ navigation }) => {
           />
         </View>
 
-        <Text
-          style={{
-            fontSize: 28,
-            fontWeight: '500',
-            color: activeColors.tint,
-            marginBottom: 30,
-            textAlign: 'center',
-          }}
-        >
-          Register
-        </Text>
-
         <View
           style={{
             flexDirection: 'row',
@@ -190,13 +178,20 @@ const RegisterScreen = ({ navigation }) => {
           }}
         />
 
-        <CustomButton label={'Register'} onPress={() => {}} />
+        <CustomButton
+          size="large"
+          label={'Register'}
+          type="primary"
+          // onPress={handleSubmit}
+          // disabled={loading}
+          // loading={loading}
+        />
 
         <View
           style={{
             flexDirection: 'row',
             justifyContent: 'center',
-            marginBottom: 30,
+            marginVertical: 30,
           }}
         >
           <Text style={{ color: activeColors.tint }}>Already registered? </Text>

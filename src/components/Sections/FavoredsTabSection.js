@@ -31,7 +31,7 @@ const FavoredsTabSection = ({ route }) => {
   const { openModal, closeModal } = useModal();
 
   useEffect(() => {
-    loadFavorites();
+    // loadFavorites();
   }, []);
 
   const loadFavorites = async () => {

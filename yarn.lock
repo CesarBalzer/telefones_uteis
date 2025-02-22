@@ -4830,10 +4830,10 @@ react-native-select-dropdown@^4.0.0:
   resolved "https://registry.yarnpkg.com/react-native-select-dropdown/-/react-native-select-dropdown-4.0.0.tgz#35e11939524fbcdd03aa7c793b037e62ee2608ee"
   integrity sha512-/oP7IMnRM6w+O2MtvZLbq8GL8lbu31Kj+6CKuz3/7geWdvzC3elBhkBOzgoAnOHQ0A7OLtat6wuDzvo/3FTQ7g==
 
-react-native-shortcut-custom@^0.4.12:
-  version "0.4.12"
-  resolved "https://registry.yarnpkg.com/react-native-shortcut-custom/-/react-native-shortcut-custom-0.4.12.tgz#45e54462e62dd2f37fb0d7d68203a63e54e39785"
-  integrity sha512-mi00EHAlUI1L1gaxZ+TNoRoOnPKLRnr+x9d29pf8c2VIO2/+4Qcz4ujUKwR6ZztMZ3I8cKkqYsv0QFtPza22bQ==
+react-native-shortcut-custom@^0.4.13:
+  version "0.4.13"
+  resolved "https://registry.yarnpkg.com/react-native-shortcut-custom/-/react-native-shortcut-custom-0.4.13.tgz#886b90e7baf20d40ac269c8f0b8a164c06b5e539"
+  integrity sha512-IbCGStOHpYCGGCcDh10aOPQsZeVU0oAoSG2iOmNDH39/KCwxtJo+jbA5NBSLIsBDE4KUa+z8dBXiOIa6fZGJuw==
   dependencies:
     react-native-fs "^2.20.0"
 

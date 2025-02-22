@@ -66,7 +66,7 @@ const createStyles = (colors, type, size, shape, disabled, isHorizontal) => {
   let backgroundColor,
     textColor,
     borderColor,
-    loadingColor,
+    borderWidth = 0,
     paddingVertical,
     paddingHorizontal,
     width,
@@ -97,9 +97,14 @@ const createStyles = (colors, type, size, shape, disabled, isHorizontal) => {
       break;
     case 'outlined':
       backgroundColor = 'transparent';
-      borderColor = colors.primary;
-      textColor = colors.secondary;
-      borderWidth = 1;
+      borderColor = colors.accent;
+      textColor = colors.accent;
+      borderWidth = 2;
+      break;
+    case 'default':
+      backgroundColor = '#d3d3d3'; // Cinza claro
+      textColor = '#FFF'; // Branco
+      borderColor = 'transparent';
       break;
     default:
       backgroundColor = colors.accent;
@@ -109,9 +114,8 @@ const createStyles = (colors, type, size, shape, disabled, isHorizontal) => {
   if (disabled) {
     backgroundColor = `${colors.tertiary}30`;
     textColor = `${colors.tertiary}60`;
+    borderColor = 'transparent';
   }
-
-  loadingColor = type === 'outlined' ? colors.primary : colors.light;
 
   switch (size) {
     case 'small':
@@ -120,7 +124,6 @@ const createStyles = (colors, type, size, shape, disabled, isHorizontal) => {
       paddingVertical = 6;
       paddingHorizontal = 10;
       fontSize = 12;
-
       break;
     case 'large':
       width = 70;
@@ -128,7 +131,6 @@ const createStyles = (colors, type, size, shape, disabled, isHorizontal) => {
       paddingVertical = 14;
       paddingHorizontal = 20;
       fontSize = 18;
-
       break;
     case 'big':
       width = 90;
@@ -136,7 +138,6 @@ const createStyles = (colors, type, size, shape, disabled, isHorizontal) => {
       paddingVertical = 18;
       paddingHorizontal = 25;
       fontSize = 20;
-
       break;
     case 'normal':
     default:
@@ -168,7 +169,7 @@ const createStyles = (colors, type, size, shape, disabled, isHorizontal) => {
       alignItems: 'center',
       borderRadius,
       borderColor,
-      borderWidth: type === 'outlined' ? 1 : 0,
+      borderWidth,
     },
     content: {
       alignItems: 'center',
@@ -186,9 +187,6 @@ const createStyles = (colors, type, size, shape, disabled, isHorizontal) => {
     },
     loadingContainer: {
       paddingHorizontal: 10,
-    },
-    loadingColor: {
-      color: colors.light,
     },
   });
 };

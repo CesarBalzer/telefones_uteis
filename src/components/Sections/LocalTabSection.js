@@ -112,7 +112,7 @@ const LocalTabSection = ({ route }) => {
   const handleSearch = (text) => {
     setSearchText(text);
     if (!text) {
-      console.log('SETPHONES => ');
+      // console.log('SETPHONES => ');
       setPhones([]);
       return;
     }
@@ -123,7 +123,7 @@ const LocalTabSection = ({ route }) => {
   };
 
   const handleReset = async () => {
-    console.log('HANDLE RESET => ');
+    // console.log('HANDLE RESET => ');
     setSearchText('');
     setLoadingPhone(true);
     // setPhones([]);
@@ -136,7 +136,7 @@ const LocalTabSection = ({ route }) => {
   };
 
   const handleConfirm = async (item) => {
-    console.log('HANDLECONFIRM => ', item);
+    // console.log('HANDLECONFIRM => ', item);
     try {
       await updatePhone(item.id, item);
       await getPhoneById(item.id);
@@ -153,7 +153,7 @@ const LocalTabSection = ({ route }) => {
 
   const handleOpenModal = (data) => {
     openModal({
-      content: <PhoneModal data={data} onConfirm={handleConfirm} />,
+      content: <PhoneModal data={data} onConfirm={handleConfirm} user={user} />,
     });
   };
 

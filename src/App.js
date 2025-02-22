@@ -12,6 +12,7 @@ const App = () => {
   let activeColors = colors[theme.mode];
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
+  // console.log('USER => ', user);
 
   useEffect(() => {
     setTimeout(() => {

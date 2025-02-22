@@ -16,6 +16,7 @@ export class Auth extends Module {
   }) {
     return this.post('api/auth/register', params);
   }
+
   fetchFromAPI({
     lastSync,
     page,
@@ -28,5 +29,21 @@ export class Auth extends Module {
     return this.get(
       `api/app/sync?lastSync=${lastSync ?? ''}&page=${page}&perPage=${perPage}`
     );
+  }
+
+  toggleFavored(phoneId: number) {
+    return this.post('api/favorites/toggle', { phone_id: phoneId });
+  }
+
+  favorites() {
+    return this.get('api/favorites');
+  }
+
+  refresh() {
+    return this.post('api/refresh');
+  }
+
+  logout() {
+    return this.post('api/logout');
   }
 }

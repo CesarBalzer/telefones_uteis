@@ -1,93 +1,39 @@
-import React, { useContext } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  Alert,
-  PermissionsAndroid,
-  Platform,
-  Linking,
-} from 'react-native';
+import React, { useContext, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { colors } from '../../config/theme';
 import { ThemeContext } from '../../context/ThemeContext';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Avatar from '../Avatars/Avatar';
-import { addDirectCallShortcut } from 'react-native-shortcut-custom';
+import PermissionService from '../../services/PermissionService';
+import { formatPhoneNumber, validatePhoneNumber } from '../../utils/Helpers';
 
 const ContactCard = ({ data, onEdit, onCall }) => {
-  // console.log('CONTACTCARD => ', data);
   const { theme } = useContext(ThemeContext);
   let activeColors = colors[theme.mode];
   const styles = createStyles(activeColors);
+
+  useEffect(() => {
+    PermissionService.requestPermissions();
+  }, []);
 
   const handleEdit = (id) => {
     onEdit && onEdit(id);
   };
 
-  const checkAndRequestPermissions = async () => {
-    if (Platform.OS !== 'android') return true;
-
-    const permissions = [
-      PermissionsAndroid.PERMISSIONS.CALL_PHONE,
-      PermissionsAndroid.PERMISSIONS.WRITE_CONTACTS,
-      'com.android.launcher.permission.INSTALL_SHORTCUT', // CREATE_SHORTCUT pode ser substituído por essa string específica
-    ];
-
-    const messages = {
-      [PermissionsAndroid.PERMISSIONS.CALL_PHONE]:
-        'Precisamos da permissão para fazer chamadas através dos atalhos.',
-      [PermissionsAndroid.PERMISSIONS.WRITE_CONTACTS]:
-        'Precisamos da permissão para editar seus contatos.',
-      'com.android.launcher.permission.INSTALL_SHORTCUT':
-        'Precisamos da permissão para criar atalhos na tela inicial.',
-    };
-
-    try {
-      const results = await PermissionsAndroid.requestMultiple(permissions);
-      for (const permission of permissions) {
-        if (results[permission] !== PermissionsAndroid.RESULTS.GRANTED) {
-          Alert.alert(
-            'Permissão negada!',
-            `${messages[permission]} Deseja abrir as configurações para conceder a permissão?`,
-            [
-              { text: 'Cancelar', style: 'cancel' },
-              { text: 'Abrir Configurações', onPress: openAppSettings },
-            ]
-          );
-          return false;
-        }
-      }
-
-      return true;
-    } catch (error) {
-      console.log('Erro ao verificar permissões:', error);
-      Alert.alert('Erro', 'Erro ao verificar permissões.');
-      return false;
-    }
+  const isValidPhoneNumber = (phoneNumber) => {
+    const phoneRegex = /^\+?[1-9]\d{7,14}$/;
+    return phoneRegex.test(phoneNumber);
   };
 
   const handleCall = async () => {
-    const hasAllPermissions = await checkAndRequestPermissions();
-
-    if (!hasAllPermissions) {
-      return;
-    }
-
-    data &&
-    data.phoneNumbers &&
-    data.phoneNumbers[0] &&
-    data.phoneNumbers[0].number
-      ? onCall(data.phoneNumbers[0].number)
-      : null;
+    const phoneNumber = validatePhoneNumber(data?.phoneNumbers?.[0]?.number);
+    console.log('HANDLECALL => ', phoneNumber);
+    // if (phoneNumber && isValidPhoneNumber(phoneNumber)) {
+    //   onCall(phoneNumber);
+    // } else {
+    //   Alert.alert('Erro', 'O contato não possui um número de telefone válido.');
+    // }
   };
-
-    const openAppSettings = () => {
-      Linking.openSettings().catch(() => {
-        Alert.alert('Erro', 'Não foi possível abrir as configurações.');
-      });
-    };
 
   const FavoredIcon = () => {
     return (
@@ -148,7 +94,6 @@ const ContactCard = ({ data, onEdit, onCall }) => {
             style={[styles.title, { color: activeColors.text }]}
             numberOfLines={1}
           >
-            {/* {data.title} */}
             {data.value}
           </Text>
           {data.phoneNumbers.map((item, idx) => (

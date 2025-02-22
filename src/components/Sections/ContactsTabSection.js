@@ -196,7 +196,7 @@ const ContactsTabSection = ({ route, navigate }) => {
       {loading ? (
         [1, 2, 3, 4, 5, 6, 7].map((i) => <SkelletonPhoneItem key={i} />)
       ) : (
-        <ContactContent data={contacts} handleEdit={handleOpenModal} />
+        <ContactContent data={contacts} user={user} handleEdit={handleOpenModal} />
       )}
     </View>
   );

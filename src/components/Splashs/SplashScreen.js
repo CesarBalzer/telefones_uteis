@@ -5,18 +5,19 @@ import {
   Animated,
   Easing,
   Text,
-  ImageBackground,
+  StatusBar,
 } from 'react-native';
 import LottieView from 'lottie-react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { colors } from '../../config/theme';
 
 let animationJson = require('../../assets/animations/logo.json');
-let background = require('../../assets/background-effect.png');
 
 const AnimatedLottieView = Animated.createAnimatedComponent(LottieView);
 
 const SplashScreen = ({ onFinish }) => {
-  const styles = createStyles();
+  const { dark } = colors; // Pegando as cores diretamente do tema
+  const styles = createStyles(dark);
   const animationProgress = useRef(new Animated.Value(0));
   const [displayedText, setDisplayedText] = useState('');
   const [textCompleted, setTextCompleted] = useState(false);
@@ -50,56 +51,59 @@ const SplashScreen = ({ onFinish }) => {
 
   return (
     <LinearGradient
-      colors={['#3b4253', '#5C6C92']}
+      colors={['#1E3A8A', '#2C3E50']} // 🔹 Gradiente atualizado para maior conforto visual
       start={{ x: 0.4, y: 1 }}
       end={{ x: 1, y: 0.5 }}
       style={{ flex: 1 }}
     >
-      <ImageBackground
-        source={background}
-        resizeMode="cover"
-        style={styles.image}
-      >
-        <View style={styles.container}>
-          <Text style={styles.text}>{displayedText}</Text>
-          <View style={styles.animationContainer}>
-            <AnimatedLottieView
-              source={animationJson}
-              progress={animationProgress.current}
-              style={{ width: 500, height: 500 }}
-            />
-          </View>
+      <StatusBar
+        barStyle={'light-content'}
+        translucent
+        animated={true}
+        backgroundColor={'#2C3E50'}
+      />
+      <View style={styles.container}>
+        <Text style={styles.text}>{displayedText}</Text>
+        <View style={styles.animationContainer}>
+          <AnimatedLottieView
+            source={animationJson}
+            progress={animationProgress.current}
+            style={styles.animation}
+          />
         </View>
-      </ImageBackground>
+      </View>
     </LinearGradient>
   );
 };
 
-const createStyles = () => {
+const createStyles = (colors) => {
   return StyleSheet.create({
     container: {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
     },
-    image: {
-      flex: 1,
-      justifyContent: 'center',
-      height: 1300,
-    },
     text: {
-      color: '#F9FAFB',
-      fontSize: 42,
-      fontWeight: '600',
+      color: colors.text,
+      fontSize: 38,
+      fontWeight: '700',
       textAlign: 'center',
       paddingHorizontal: 40,
-      lineHeight: 50,
+      lineHeight: 45,
+      textShadowColor: 'rgba(0, 0, 0, 0.2)',
+      textShadowOffset: { width: 2, height: 2 },
+      textShadowRadius: 3,
     },
     animationContainer: {
-      width: 300,
-      height: 300,
+      width: 350,
+      height: 350,
       justifyContent: 'center',
       alignItems: 'center',
+      marginTop: 20,
+    },
+    animation: {
+      width: 320,
+      height: 320,
     },
   });
 };

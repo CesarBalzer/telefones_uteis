@@ -6,7 +6,7 @@ import {
   updateContact,
   removeAllContacts,
   getContactByRecordId,
-} from '../db/ContactService';
+} from '../services/ContactService';
 
 const PAGE_SIZE = 50;
 
@@ -28,7 +28,7 @@ const useContacts = () => {
         setPaginatedContacts([]);
       }
     } catch (error) {
-      console.error('Erro ao buscar contatos:', error);
+      console.log('Erro ao buscar contatos:', error);
       setContacts([]);
       setPaginatedContacts([]);
     }
@@ -55,7 +55,7 @@ const useContacts = () => {
 
       await fetchContacts(); 
     } catch (error) {
-      console.error('Erro ao importar contatos:', error);
+      console.log('Erro ao importar contatos:', error);
     }
   };
 

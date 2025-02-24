@@ -1,4 +1,21 @@
+import { isAfter, isValid, parse, subYears } from 'date-fns';
 
+export const generateRandomEmail = () => {
+  const randomString = Math.random().toString(36).substring(2, 10);
+  return `carlos_${randomString}@teste.com`;
+};
+
+export const isValidDate = (dateString) => {
+  if (!dateString || dateString.length !== 10) return false;
+
+  const parsedDate = parse(dateString, 'dd/MM/yyyy', new Date());
+
+  if (!isValid(parsedDate)) return false;
+  if (isAfter(parsedDate, new Date())) return false;
+  if (isAfter(parsedDate, subYears(new Date(), 10))) return false;
+
+  return true;
+};
 
 // console.log(Helpers.validatePhoneNumber('(11) 91234-5678')); // Returns "11912345678"
 // console.log(Helpers.validatePhoneNumber('21987654321', { onlyMobile: true })); // Returns "21987654321"
@@ -6,8 +23,6 @@
 // console.log(Helpers.validatePhoneNumber('99987654321')); // Returns false (invalid DDD)
 // console.log(Helpers.validatePhoneNumber('08001234567')); // Returns "08001234567" (valid toll-free number)
 // console.log(Helpers.validatePhoneNumber('40041234')); // Returns "40041234" (valid special number)
-
-
 
 const areaCodes = [
   11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 24, 27, 28, 31, 32, 33, 34, 35,
@@ -76,7 +91,7 @@ export const validatePhoneNumber = (phone, options = {}) => {
 
   if (cleanNumber.length < 10 || cleanNumber.length > 11) return false;
 
-  if (options.onlyMobile && cleanNumber.length === 10) return false; 
+  if (options.onlyMobile && cleanNumber.length === 10) return false;
   if (options.onlyLandline && cleanNumber.length === 11) return false;
 
   if (cleanNumber.length === 11) {
@@ -96,11 +111,13 @@ export const validatePhoneNumber = (phone, options = {}) => {
 };
 
 const Helpers = {
+  isValidDate,
   clearString,
   getAvatarInitials,
   cleanName,
   normalizeText,
   validatePhoneNumber,
+  generateRandomEmail,
 };
 
 export default Helpers;

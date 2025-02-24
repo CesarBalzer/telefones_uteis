@@ -1,5 +1,60 @@
-import { getDBConnection } from '../db/db-service';
+import { getDBConnection } from './db-service';
 import api from '../../api';
+import { storeJson } from './StorageService';
+
+export const getSync = async () => {
+  const db = await getDBConnection();
+  const sync = await getLastSyncTimes(db);
+  return sync;
+};
+
+export const syncUserData = async (user, setUser, setSyncStatus) => {
+  try {
+    if (user.access_token) {
+      await storeJson('access_token', user.access_token);
+    }
+    if (user.refresh_token) {
+      await storeJson('refresh_token', user.refresh_token);
+    }
+
+    setUser((prev) => ({
+      ...prev,
+      logged: true,
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      email_verified_at: user.email_verified_at,
+      created_at: user.created_at,
+      updated_at: user.updated_at,
+    }));
+
+    await syncUserDatabase(setSyncStatus);
+  } catch (error) {
+    console.log('❌ Erro ao sincronizar dados:', error);
+  }
+};
+
+const syncUserDatabase = async (setSyncStatus) => {
+  let syncSuccess = false;
+  const syncTimeout = setTimeout(() => {
+    syncSuccess = true;
+    console.log('⏳ Sincronização falhou após timeout.');
+    setSyncStatus(false);
+  }, 20000);
+
+  while (!syncSuccess) {
+    try {
+      console.log('🔄 Tentando sincronizar...');
+      await syncDatabase(setSyncStatus);
+      console.log('✅ Sincronização concluída com sucesso!');
+      syncSuccess = true;
+      clearTimeout(syncTimeout);
+    } catch (error) {
+      console.log('❌ Erro na sincronização:', error);
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+    }
+  }
+};
 
 const getLastSyncTimes = async (db) => {
   return new Promise((resolve) => {
@@ -80,9 +135,11 @@ export const syncDatabase = async (setSyncStatus) => {
 
     console.log('✅ Sincronização concluída com sucesso!');
     setSyncStatus({ isSyncing: false, isSuccess: true, isError: false });
+    return true;
   } catch (error) {
     console.log('❌ Erro na sincronização:', error);
     setSyncStatus({ isSyncing: false, isSuccess: false, isError: true });
+    return error;
   }
 };
 
@@ -264,7 +321,7 @@ const chunkInsertContacts = async (
             // if (contact.user_favorites) {
             //   contact.user_favorites.forEach((favorite) => {
             //     tx.executeSql(
-            //       `INSERT OR REPLACE INTO user_favorites (id, user_id, phone_id, created_at, updated_at) 
+            //       `INSERT OR REPLACE INTO user_favorites (id, user_id, phone_id, created_at, updated_at)
             //        VALUES (?, ?, ?, ?, ?)`,
             //       [
             //         favorite.id || null,

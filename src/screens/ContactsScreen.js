@@ -16,7 +16,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ContactCard from '../components/Cards/ContactCard';
 import { colors } from '../config/theme';
 import { ThemeContext } from '../context/ThemeContext';
-import InputSearch from '../components/Inputs/InputSearch';
+import InputSearch from '../components/Search/InputSearch';
 import SkelletonInputSearch from '../skeletons/SkelletonInputSearch';
 import SkelletonPhoneItem from '../skeletons/SkelletonPhoneItem';
 import { useNavigation } from '@react-navigation/native';
@@ -40,7 +40,7 @@ const ContactsScreen = ({ route, navigation }) => {
   useEffect(() => {
     navigation.setOptions({
       headerRight: () =>
-        hasPermission ? <HeaderRightButton onPress={importContacts} /> : null,
+        hasPermission ? <HeaderRightButton onPress={addNewContact} /> : null,
     });
 
     const checkPermissionAndFetchContacts = async () => {
@@ -104,7 +104,7 @@ const ContactsScreen = ({ route, navigation }) => {
         }
         return true;
       } catch (error) {
-        console.error('Erro ao verificar permissões:', error);
+        console.log('Erro ao verificar permissões:', error);
         return false;
       }
     }
@@ -138,7 +138,7 @@ const ContactsScreen = ({ route, navigation }) => {
         previousContactsHash.current = currentHash;
       }
     } catch (error) {
-      console.error('Error fetching contacts:', error);
+      console.log('Error fetching contacts:', error);
     } finally {
       setLoading(false);
     }

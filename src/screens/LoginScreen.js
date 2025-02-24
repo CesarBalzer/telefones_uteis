@@ -9,6 +9,8 @@ import {
   Image,
   KeyboardAvoidingView,
   StyleSheet,
+  Alert,
+  ScrollView,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -27,8 +29,8 @@ const LoginScreen = ({ navigation }) => {
   const styles = createStyles(activeColors);
   const { user, setUser } = useContext(UserContext);
   const [usr, setUsr] = useState({
-    email: 'cesar.balzer@codesign.ag',
-    password: 'Secret.321',
+    email: 'carlos_hbz9m877@teste.com',
+    password: 'Secret.123',
   });
   const [loading, setLoading] = useState(false);
   const [validationError, setValidationError] = useState('');
@@ -54,12 +56,12 @@ const LoginScreen = ({ navigation }) => {
     }, 15000);
 
     try {
-      console.log('🔑 Autenticando usuário...');
+      // console.log('🔑 Autenticando usuário...');
       const response = await api.auth.login(usr.email, usr.password, {
         signal: controller.signal,
       });
       // console.log('RESPONSE => ', response);
-      console.log('✅ Usuário autenticado:');
+      // console.log('✅ Usuário autenticado:');
       if (response.access_token) {
         await storeJson('access_token', response.access_token);
       }
@@ -67,7 +69,7 @@ const LoginScreen = ({ navigation }) => {
         await storeJson('refresh_token', response.refresh_token);
       }
 
-      console.log('✅ Usuário autenticado e tokens armazenados!');
+      // console.log('✅ Usuário autenticado e tokens armazenados!');
 
       setUser({
         ...user,
@@ -84,7 +86,7 @@ const LoginScreen = ({ navigation }) => {
 
       let syncSuccess = false;
       const syncTimeout = setTimeout(() => {
-        console.log('⏳ Sincronização demorando muito! Abortando...');
+        // console.log('⏳ Sincronização demorando muito! Abortando...');
         syncSuccess = true;
         setValidationError('Sincronização falhou. Tente novamente.');
         setLoading(false);
@@ -92,9 +94,9 @@ const LoginScreen = ({ navigation }) => {
 
       while (!syncSuccess) {
         try {
-          console.log('🔄 Iniciando sincronização...');
+          // console.log('🔄 Iniciando sincronização...');
           await syncDatabase(setSyncStatus);
-          console.log('✅ Sincronização concluída com sucesso!');
+          // console.log('✅ Sincronização concluída com sucesso!');
           syncSuccess = true;
           clearTimeout(syncTimeout);
         } catch (syncError) {
@@ -118,128 +120,167 @@ const LoginScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.safeContainer}>
       <KeyboardAvoidingView style={{ flex: 1 }}>
-        <View style={styles.containerImage}>
-          <Image source={require('../images/login.png')} style={styles.image} />
-        </View>
+        <ScrollView
+          contentContainerStyle={styles.scrollContainer}
+          keyboardShouldPersistTaps="handled"
+        >
+          <View style={styles.containerImage}>
+            <Image
+              source={
+                theme == 'dark'
+                  ? require('../assets/images/login_dark.png')
+                  : require('../assets/images/login_light.png')
+              }
+              style={styles.image}
+            />
+          </View>
 
-        <View style={styles.container}>
-          <View style={styles.section}>
-            <Text style={styles.title}>Login</Text>
-          </View>
-          <View style={styles.section}>
-            <InputField
-              label={'E-mail'}
-              value={usr?.email}
-              onChange={(text) => setUsr({ ...usr, email: text })}
-              inputType="email"
-              icon={
-                <Icon
-                  name="email"
-                  size={20}
-                  color={activeColors.tertiary}
-                  style={{ marginRight: 5 }}
-                />
-              }
-              keyboardType="email-address"
-              error={validationError && !usr.email}
-            />
-          </View>
-          <View style={styles.section}>
-            <InputField
-              label={'Senha'}
-              value={usr?.password}
-              onChange={(text) => setUsr({ ...usr, password: text })}
-              inputType="password"
-              fieldButtonLabel={'Forgot?'}
-              fieldButtonFunction={() => {}}
-              icon={
-                <Icon
-                  name="lock-outline"
-                  size={20}
-                  color={activeColors.tertiary}
-                  style={{ marginRight: 5 }}
-                />
-              }
-              error={validationError && !usr.password}
-            />
-          </View>
-          {validationError ? (
-            <View style={styles.errorContainer}>
-              <Text style={styles.errorText}>{validationError}</Text>
+          <View style={styles.container}>
+            <View style={styles.section}>
+              <Text style={styles.title}>Login</Text>
             </View>
-          ) : null}
-          <View style={styles.section}>
-            <CustomButton
-              size="large"
-              label={'Login'}
-              type='primary'
-              onPress={handleSubmit}
-              disabled={loading}
-              loading={loading}
-            />
-          </View>
+            <View style={styles.section}>
+              <InputField
+                label={'E-mail'}
+                value={usr?.email}
+                onChange={(text) => setUsr({ ...usr, email: text })}
+                inputType="email"
+                icon={
+                  <Icon
+                    name="email"
+                    size={20}
+                    color={activeColors.accent}
+                    style={{ marginRight: 5 }}
+                  />
+                }
+                keyboardType="email-address"
+                error={validationError && !usr.email}
+              />
+            </View>
+            <View style={styles.section}>
+              <InputField
+                label={'Senha'}
+                value={usr?.password}
+                onChange={(text) => setUsr({ ...usr, password: text })}
+                inputType="password"
+                fieldButtonLabel={'Esqueceu a senha?'}
+                fieldButtonFunction={() => {}}
+                icon={
+                  <Icon
+                    name="lock-outline"
+                    size={20}
+                    color={activeColors.accent}
+                    style={{ marginRight: 5 }}
+                  />
+                }
+                error={validationError && !usr.password}
+              />
+            </View>
+            {validationError ? (
+              <View style={styles.errorContainer}>
+                <Text style={styles.errorText}>{validationError}</Text>
+              </View>
+            ) : null}
+            <View style={styles.section}>
+              <CustomButton
+                size="large"
+                label={'Login'}
+                type="info"
+                onPress={handleSubmit}
+                disabled={loading}
+                loading={loading}
+                icon={
+                  <Icon
+                    name="login"
+                    size={20}
+                    color={activeColors.light}
+                    style={{ marginRight: 5 }}
+                  />
+                }
+              />
+            </View>
 
-          <View style={styles.section}>
-            <Text
+            <View style={styles.section}>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  color: activeColors.tint,
+                  marginBottom: 20,
+                  fontSize: 16,
+                }}
+              >
+                Ou, faça login com ...
+              </Text>
+            </View>
+
+            <View
               style={{
-                textAlign: 'center',
-                color: activeColors.tint,
+                flexDirection: 'row',
+                justifyContent: 'space-around',
                 marginBottom: 30,
               }}
             >
-              Or, login with ...
-            </Text>
-          </View>
+              <TouchableOpacity
+                onPress={() => {
+                  Alert.alert(
+                    'Em contrução...',
+                    'Ainda estamos desenvolvendo essa funcionalidade, em breve estará disponível, aguardem!'
+                  );
+                }}
+                style={{
+                  backgroundColor: activeColors.secondary,
+                  borderRadius: 10,
+                  paddingHorizontal: 30,
+                  paddingVertical: 10,
+                }}
+              >
+                <Icon name="google" size={24} color={activeColors.danger} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  Alert.alert(
+                    'Em contrução...',
+                    'Ainda estamos desenvolvendo essa funcionalidade, em breve estará disponível, aguardem!'
+                  );
+                }}
+                style={{
+                  backgroundColor: activeColors.secondary,
+                  borderRadius: 10,
+                  paddingHorizontal: 30,
+                  paddingVertical: 10,
+                }}
+              >
+                <Icon name="facebook" size={24} color={activeColors.info} />
+              </TouchableOpacity>
+            </View>
 
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              marginBottom: 30,
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => {}}
+            <View
               style={{
-                backgroundColor: activeColors.secondary,
-                borderRadius: 10,
-                paddingHorizontal: 30,
-                paddingVertical: 10,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginBottom: 30,
               }}
             >
-              <Icon name="google" size={24} color={activeColors.danger} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {}}
-              style={{
-                backgroundColor: activeColors.secondary,
-                borderRadius: 10,
-                paddingHorizontal: 30,
-                paddingVertical: 10,
-              }}
-            >
-              <Icon name="facebook" size={24} color={activeColors.info} />
-            </TouchableOpacity>
-          </View>
-
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              marginBottom: 30,
-            }}
-          >
-            <Text style={{ color: activeColors.tint }}>New to the app? </Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-              <Text style={{ color: activeColors.accent, fontWeight: '700' }}>
-                {' '}
-                Register
+              <Text style={{ color: activeColors.tint, fontSize: 18 }}>
+                Ainda não tem conta?{' '}
               </Text>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+                <Text
+                  style={{
+                    color: activeColors.accent,
+                    fontWeight: 'bold',
+                    fontSize: 18,
+                  }}
+                >
+                  {' '}
+                  Registre-se
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
 
-        <VersionText />
+          <VersionText />
+        </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -252,17 +293,23 @@ const createStyles = (colors) => {
       flex: 1,
       justifyContent: 'space-between',
     },
+    scrollContainer: {
+      flexGrow: 1,
+      justifyContent: 'center',
+      paddingBottom: 40,
+    },
     containerImage: {
+      flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
     },
     image: {
-      marginTop: 10,
-      height: 150,
-      width: 130,
-      transform: [{ rotate: '-5deg' }],
+      marginTop: 50,
+      height: 100,
+      width: 150,
+      transform: [{ rotate: '15deg' }],
     },
-    container: { paddingHorizontal: 50, flex: 2 },
+    container: { paddingHorizontal: 20, flex: 2 },
     section: {
       paddingVertical: 10,
     },

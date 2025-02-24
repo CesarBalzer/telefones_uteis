@@ -1,10 +1,7 @@
 import React, { useContext } from 'react';
-import { View } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import { colors } from '../config/theme';
 import { ThemeContext } from '../context/ThemeContext';
-
-// import { Container } from './styles';
 
 const SkelletonInputSearch = () => {
   const { theme } = useContext(ThemeContext);

@@ -105,7 +105,7 @@ export default class Service {
         );
       }
 
-      console.error('❌ Erro ao renovar token:', errorMessage);
+      console.log('❌ Erro ao renovar token:', errorMessage);
 
       this.failedQueue.forEach((prom) => prom.reject(error));
       this.failedQueue = [];
@@ -144,7 +144,7 @@ export default class Service {
           _retry?: boolean;
         };
 
-        console.error(
+        console.log(
           '❌ Erro na requisição:',
           error.response?.status,
           error.response?.data

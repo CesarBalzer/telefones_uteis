@@ -1,29 +1,26 @@
-import React, { useRef, useState, useContext, useEffect } from 'react';
+import React, {
+  useState,
+  useContext,
+  useEffect,
+  useCallback,
+} from 'react';
 import {
   View,
   StyleSheet,
-  ActivityIndicator,
-  TouchableOpacity,
   Platform,
   PermissionsAndroid,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Contacts from 'react-native-contacts';
-import LocalContent from '../Content/LocalContent';
 import { colors } from '../../config/theme';
 import { ThemeContext } from '../../context/ThemeContext';
-import InputSearch from '../Inputs/InputSearch';
+import InputSearch from '../Search/InputSearch';
 import SkelletonPhoneItem from '../../skeletons/SkelletonPhoneItem';
 import SkelletonInputSearch from '../../skeletons/SkelletonInputSearch';
-import { useModal } from '../../context/ModalContext';
-import PhoneModal from '../Modals/PhoneModal';
-import { updatePhone, getPhonesFavoreds } from '../../db/PhoneService';
-import EmptyScreen from '../../screens/EmptyScreen';
-import ContactCard from '../Cards/ContactCard';
 import ContactContent from '../Content/ContactContent';
-import ContactModal from '../Modals/ContactModal';
 import { useNavigation } from '@react-navigation/native';
 import { normalizeText } from '../../utils/Helpers';
+import IconSearch from '../Search/IconSearch';
 
 const ContactsTabSection = ({ route, navigate }) => {
   const { theme } = useContext(ThemeContext);
@@ -32,9 +29,7 @@ const ContactsTabSection = ({ route, navigate }) => {
   const [loading, setLoading] = useState(true);
   const [contacts, setContacts] = useState([]);
   const [searchText, setSearchText] = useState('');
-  const [phones, setPhones] = useState([]);
   const [originalContacts, setOriginalContacts] = useState([]);
-  const { openModal, closeModal } = useModal();
   const navigator = useNavigation();
 
   useEffect(() => {
@@ -54,7 +49,7 @@ const ContactsTabSection = ({ route, navigate }) => {
             setLoading(false);
           }
         } catch (err) {
-          console.error('Permission request error:', err);
+          console.log('Permission request error:', err);
           setLoading(false);
         }
       } else {
@@ -63,33 +58,19 @@ const ContactsTabSection = ({ route, navigate }) => {
     })();
   }, []);
 
-  const fetchContacts = () => {
+  const fetchContacts = useCallback(async () => {
     Contacts.getAll()
       .then((allContacts) => {
-        // console.log('ALLCONTACTS => ', allContacts);
         setContacts(allContacts);
         setOriginalContacts(allContacts);
         setLoading(false);
       })
       .catch((error) => {
-        console.error('Error loading contacts:', error);
+        console.log('Error loading contacts:', error);
         setLoading(false);
       });
-
-    // Contacts.getCount().then((count) => {
-    //   setSearchPlaceholder(`Search ${count} contacts`);
-    // });
-
     Contacts.checkPermission();
-  };
-
-  useEffect(() => {
-    (async () => {
-      // await loadPhones();
-    })();
-  }, []);
-
-
+  });
 
   const textIncludesInFields = (item, text) => {
     const fieldsToSearch = ['title', 'number', 'ddd', 'description'];
@@ -99,7 +80,6 @@ const ContactsTabSection = ({ route, navigate }) => {
     );
   };
 
-  // const handleSearch = (arrayToSearch, arrayResultSearch,arrayParamsToSearch, text) => {}
   const handleSearch = (text) => {
     setSearchText(text);
     if (!text) {
@@ -112,66 +92,16 @@ const ContactsTabSection = ({ route, navigate }) => {
     setContacts(filtered);
   };
 
-  const handleConfirm = async (item) => {
-    console.log('HANDLECONFIRM => ', item);
-    // setLoading(true);
-    // try {
-    //   await updatePhone(item.id, item);
-    //   await loadPhones();
-    //   setTimeout(() => {
-    //     setLoading(false);
-    //     closeModal();
-    //   }, 3000);
-    // } catch (error) {
-    //   setLoading(false);
-    //   closeModal();
-    //   console.log('ERROR UPDATE PHONE=> ', error);
-    // }
-  };
-
   const handleOpenModal = (data) => {
     navigator.navigate('DetailContact', {
       screen: 'DetailContact',
       params: data,
     });
-    // openModal({
-    //   content: <ContactModal data={data} onConfirm={handleConfirm} />,
-    // });
   };
 
   const handleIconSearch = () => {
     setSearchText('');
     loadPhones();
-  };
-
-  const ActionIconSearch = ({ value, loading }) => {
-    return (
-      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-        {loading ? (
-          <ActivityIndicator
-            size={'small'}
-            color={activeColors.accent}
-            style={{}}
-          />
-        ) : value == '' ? (
-          <Icon
-            name="magnify"
-            size={30}
-            color="#666"
-            style={{ marginRight: 5 }}
-          />
-        ) : (
-          <TouchableOpacity onPress={handleIconSearch}>
-            <Icon
-              name="close"
-              size={30}
-              color="#666"
-              style={{ marginRight: 5 }}
-            />
-          </TouchableOpacity>
-        )}
-      </View>
-    );
   };
 
   return (
@@ -185,7 +115,7 @@ const ContactsTabSection = ({ route, navigate }) => {
           <InputSearch
             selectionColor={activeColors.tint}
             label={'Pesquisar...'}
-            icon={<ActionIconSearch value={searchText} loading={loading} />}
+            icon={<IconSearch value={searchText} loading={loadingPhone} onPress={handleIconSearch} />}
             keyboardType={'name-phone-pad'}
             onChangeText={handleSearch}
             value={searchText}
@@ -196,7 +126,11 @@ const ContactsTabSection = ({ route, navigate }) => {
       {loading ? (
         [1, 2, 3, 4, 5, 6, 7].map((i) => <SkelletonPhoneItem key={i} />)
       ) : (
-        <ContactContent data={contacts} user={user} handleEdit={handleOpenModal} />
+        <ContactContent
+          data={contacts}
+          user={user}
+          handleEdit={handleOpenModal}
+        />
       )}
     </View>
   );

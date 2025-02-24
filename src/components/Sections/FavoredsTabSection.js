@@ -1,112 +1,140 @@
-import React, { useState, useContext, useEffect } from 'react';
-import {
-  View,
-  StyleSheet,
-  ActivityIndicator,
-  TouchableOpacity,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
+import { View, StyleSheet, PermissionsAndroid, Platform } from 'react-native';
 import LocalContent from '../Content/LocalContent';
 import { colors } from '../../config/theme';
 import { ThemeContext } from '../../context/ThemeContext';
-import InputSearch from '../Inputs/InputSearch';
+import InputSearch from '../Search/InputSearch';
 import SkelletonPhoneItem from '../../skeletons/SkelletonPhoneItem';
 import SkelletonInputSearch from '../../skeletons/SkelletonInputSearch';
 import { useModal } from '../../context/ModalContext';
 import PhoneModal from '../Modals/PhoneModal';
-import FavoriteService from '../../db/FavoriteService';
-import EmptyScreen from '../../screens/EmptyScreen';
+import FavoriteService from '../../services/FavoriteService';
+import EmptyScreen from '../../screens/favorites/EmptyScreen';
 import { getAll } from 'react-native-contacts';
 import { normalizeText } from '../../utils/Helpers';
+import { UserContext } from '../../context/UserContext';
+import IconSearch from '../Search/IconSearch';
+import PermissionService from '../../services/PermissionService';
 
-const FavoredsTabSection = ({ route }) => {
+const FavoredsTabSection = () => {
   const { theme } = useContext(ThemeContext);
-  let activeColors = colors[theme.mode];
+  const { user } = useContext(UserContext);
+  const { openModal, closeModal } = useModal();
+  const activeColors = colors[theme.mode];
   const styles = createStyles(activeColors);
+
   const [loading, setLoading] = useState(false);
   const [loadingPhone, setLoadingPhone] = useState(false);
   const [searchText, setSearchText] = useState('');
   const [phones, setPhones] = useState([]);
   const [originalPhones, setOriginalPhones] = useState([]);
-  const { openModal, closeModal } = useModal();
 
   useEffect(() => {
-    // loadFavorites();
+    (async () => {
+      if (Platform.OS === 'android') {
+        try {
+          const granted = await PermissionsAndroid.request(
+            PermissionsAndroid.PERMISSIONS.READ_CONTACTS,
+            {
+              title: 'Contacts',
+              message: 'This app would like to view your contacts.',
+            }
+          );
+          if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+            loadFavorites();
+          } else {
+            setLoading(false);
+          }
+        } catch (err) {
+          console.log('Permission request error:', err);
+          setLoading(false);
+        }
+      } else {
+        fetchContacts();
+      }
+    })();
   }, []);
 
-  const loadFavorites = async () => {
+
+  const loadFavorites = useCallback(async () => {
     try {
       setLoadingPhone(true);
-      
-      const userId = 1; // Substituir pelo ID do usuário logado
-      const dbFavorites = await FavoriteService.getFavoritesByUserId(userId);
-      const allContacts = await getAll();
-      const starredContacts = allContacts.filter(
-        (contact) => contact.isStarred
-      );
 
-      const phoneContacts = starredContacts
-        .map((contact) => {
-          return contact.phoneNumbers.map((phone) => ({
+      const permission = await PermissionService.requestPermissions();
+
+      if (!permission) {
+        return;
+      }
+
+      const dbFavorites = await FavoriteService.getFavoritesByUserId(user.id);
+      const favoritesContacts = dbFavorites.flatMap(({ phone }) => ({
+        active: 1,
+        category_id: 1,
+        description: phone.description,
+        favored: 1,
+        icon: phone.icon,
+        id: phone.id,
+        number: phone.number,
+        state_id: phone.state_id,
+        title: phone.title,
+      }));
+
+      const allContacts = await getAll();
+      const phoneContacts = allContacts
+        .filter(({ isStarred }) => isStarred)
+        .flatMap(({ displayName, phoneNumbers }) =>
+          phoneNumbers.map(({ id, number, thumbnailPath }) => ({
             active: 1,
             category_id: 1,
             description: '',
             favored: 1,
-            icon: phone.thumbnailPath,
-            id: parseInt(phone.id),
-            number: phone.number,
+            icon: thumbnailPath,
+            id: parseInt(id),
+            number,
             state_id: 0,
-            title: contact.displayName,
-          }));
-        })
-        .flat();
+            title: displayName,
+          }))
+        );
 
-      const mergedFavorites = [...dbFavorites, ...phoneContacts];
+      const mergedFavorites = [...favoritesContacts, ...phoneContacts].sort(
+        (a, b) => a.title.localeCompare(b.title)
+      );
 
       setPhones(mergedFavorites);
       setOriginalPhones(mergedFavorites);
-      
     } catch (error) {
       console.log('ERROR => ', error);
     } finally {
       setLoadingPhone(false);
     }
-  };
+  }, [user.id]);
 
   const textIncludesInFields = (item, text) => {
-    const fieldsToSearch = ['title', 'number', 'ddd', 'description'];
     const normalizedText = normalizeText(text);
-    return fieldsToSearch.some((field) =>
-      normalizeText(item[field]).includes(normalizedText)
+    return ['title', 'number', 'ddd', 'description'].some((field) =>
+      normalizeText(item[field] || '').includes(normalizedText)
     );
   };
 
   const handleSearch = (text) => {
     setSearchText(text);
-    if (!text) {
-      setPhones(originalPhones);
-      return;
-    }
-    const filtered = originalPhones.filter((item) =>
-      textIncludesInFields(item, text)
+    setPhones(
+      text
+        ? originalPhones.filter((item) => textIncludesInFields(item, text))
+        : originalPhones
     );
-    setPhones(filtered);
   };
 
   const handleConfirm = async (item) => {
-    console.log('HANDLECONFIRM => ', item);
     setLoading(true);
     try {
       await FavoriteService.removeFavorite(1, item.id);
       await loadFavorites();
-      setTimeout(() => {
-        setLoading(false);
-        closeModal();
-      }, 1000);
     } catch (error) {
+      console.log('ERROR REMOVE FAVORITE => ', error);
+    } finally {
       setLoading(false);
       closeModal();
-      console.log('ERROR REMOVE FAVORITE => ', error);
     }
   };
 
@@ -121,35 +149,6 @@ const FavoredsTabSection = ({ route }) => {
     loadFavorites();
   };
 
-  const ActionIconSearch = ({ value, loading }) => {
-    return (
-      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-        {loading ? (
-          <ActivityIndicator
-            size={'small'}
-            color={activeColors.accent}
-          />
-        ) : value == '' ? (
-          <Icon
-            name="magnify"
-            size={30}
-            color="#666"
-            style={{ marginRight: 5 }}
-          />
-        ) : (
-          <TouchableOpacity onPress={handleIconSearch}>
-            <Icon
-              name="close"
-              size={30}
-              color="#666"
-              style={{ marginRight: 5 }}
-            />
-          </TouchableOpacity>
-        )}
-      </View>
-    );
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.containerSearch}>
@@ -158,9 +157,15 @@ const FavoredsTabSection = ({ route }) => {
         ) : (
           <InputSearch
             selectionColor={activeColors.tint}
-            label={'Pesquisar...'}
-            icon={<ActionIconSearch value={searchText} loading={loadingPhone} />}
-            keyboardType={'name-phone-pad'}
+            label="Pesquisar..."
+            icon={
+              <IconSearch
+                value={searchText}
+                loading={loadingPhone}
+                onPress={handleIconSearch}
+              />
+            }
+            keyboardType="name-phone-pad"
             onChangeText={handleSearch}
             value={searchText}
           />
@@ -168,8 +173,8 @@ const FavoredsTabSection = ({ route }) => {
       </View>
 
       {loadingPhone ? (
-        [1, 2, 3, 4, 5, 6, 7].map((i) => <SkelletonPhoneItem key={i} />)
-      ) : phones && phones.length ? (
+        Array.from({ length: 7 }, (_, i) => <SkelletonPhoneItem key={i} />)
+      ) : phones.length ? (
         <LocalContent data={phones} handleEdit={handleOpenModal} />
       ) : (
         <EmptyScreen />
@@ -178,23 +183,24 @@ const FavoredsTabSection = ({ route }) => {
   );
 };
 
-const createStyles = (colors) => {
-  return StyleSheet.create({
+const createStyles = (colors) =>
+  StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: colors.primary,
     },
     containerSearch: {
-      marginTop: 15,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginVertical: 15,
       paddingVertical: 15,
       paddingHorizontal: 10,
       marginHorizontal: 10,
-      backgroundColor: colors.primary,
+      backgroundColor: `${colors.primary}`,
       borderColor: colors.accent,
       borderWidth: 1,
       borderRadius: 10,
     },
   });
-};
 
 export default FavoredsTabSection;

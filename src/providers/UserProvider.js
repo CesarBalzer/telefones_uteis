@@ -13,10 +13,12 @@ const initialState = {
   updated_at: null,
   birthday: null,
   password: null,
+  password_confirmation: null,
   state_id: null,
   country_state_id: null,
   logged: false,
   welcome: false,
+  pendingRegistration:null
 };
 
 const UserProvider = ({ children }) => {
@@ -46,10 +48,10 @@ const UserProvider = ({ children }) => {
       console.log('🔄 Tentando renovar o token...');
 
       const refresh_token = await getJson('refresh_token');
-      console.log('📂 Refresh Token encontrado:', refresh_token);
+      // console.log('📂 Refresh Token encontrado:', refresh_token);
 
       if (!refresh_token) {
-        console.log('⚠️ Nenhum refresh_token encontrado, deslogando usuário.');
+        // console.log('⚠️ Nenhum refresh_token encontrado, deslogando usuário.');
         return logout();
       }
 
@@ -63,13 +65,13 @@ const UserProvider = ({ children }) => {
 
       clearTimeout(timeoutId);
 
-      console.log('📩 Resposta da API para refresh:', response);
+      // console.log('📩 Resposta da API para refresh:', response);
 
       if (response?.access_token) {
         await storeJson('access_token', response.access_token);
-        console.log('✅ Token renovado com sucesso!');
+        // console.log('✅ Token renovado com sucesso!');
       } else {
-        console.log('⚠️ Nenhum novo access_token retornado pela API.');
+        // console.log('⚠️ Nenhum novo access_token retornado pela API.');
       }
 
       if (response?.refresh_token) {
@@ -81,14 +83,14 @@ const UserProvider = ({ children }) => {
 
       return response?.access_token || null;
     } catch (error) {
-      console.error('❌ Erro ao renovar token:', error);
+      console.log('❌ Erro ao renovar token:', error);
       if (error.name === 'AbortError') {
         console.log('⏳ Timeout: A requisição de refresh foi abortada.');
       }
       logout();
     } finally {
       setIsRefreshing(false);
-      console.log('🔄 Finalizou tentativa de renovação do token.');
+      // console.log('🔄 Finalizou tentativa de renovação do token.');
     }
   };
 
@@ -98,7 +100,7 @@ const UserProvider = ({ children }) => {
         const storedUser = await getJson('user');
 
         if (storedUser) {
-          console.log('📂 Dados do usuário carregados:', storedUser);
+          // console.log('📂 Dados do usuário carregados:', storedUser);
           setUser({ ...storedUser, logged: true });
 
           const token = await getJson('access_token');
@@ -109,7 +111,7 @@ const UserProvider = ({ children }) => {
           console.log('⚠️ Nenhum usuário salvo encontrado.');
         }
       } catch (error) {
-        console.error('❌ Erro ao carregar usuário:', error);
+        console.log('❌ Erro ao carregar usuário:', error);
       } finally {
         setLoading(false);
       }

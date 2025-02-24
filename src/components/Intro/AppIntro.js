@@ -116,9 +116,7 @@ const AppIntro = () => {
   return (
     <LinearGradient
       colors={
-        theme.mode !== 'dark'
-          ? [activeColors.accent, activeColors.secondary]
-          : [activeColors.secondary, activeColors.accent]
+        theme.mode !== 'dark' ? ['#1E3A8A', '#2C3E50'] : ['#2C3E50', '#1E3A8A']
       }
       start={{ x: 0.4, y: 1 }}
       end={{ x: 1, y: 0.5 }}
@@ -162,8 +160,8 @@ const createStyles = (colors) => {
       flex: 1,
     },
     title: {
-      fontSize: 22,
-      color: colors.text,
+      fontSize: 24,
+      color: colors.light,
       backgroundColor: 'transparent',
       textAlign: 'center',
       fontWeight: '700',
@@ -172,7 +170,7 @@ const createStyles = (colors) => {
       fontSize: 18,
       fontWeight: 400,
       lineHeight: 28,
-      color: colors.text,
+      color: colors.light,
       backgroundColor: 'transparent',
       textAlign: 'center',
       paddingHorizontal: 20,
@@ -181,7 +179,7 @@ const createStyles = (colors) => {
     buttonCircle: {
       width: 50,
       height: 50,
-      backgroundColor: `${colors.tertiary}10`,
+      backgroundColor: `${colors.secondary}30`,
       borderRadius: 50,
       justifyContent: 'center',
       alignItems: 'center',
@@ -196,7 +194,7 @@ const createStyles = (colors) => {
       elevation: 5,
     },
     icon: {
-      color: colors.accent,
+      color: colors.light,
     },
     iconSucess: {
       color: colors.secondary,

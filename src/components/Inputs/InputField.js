@@ -44,7 +44,7 @@ const createStyles = (colors) => {
       // marginVertical: 10,
     },
     label: {
-      fontSize: 12,
+      fontSize: 16,
       fontWeight: 'bold',
       color: colors.accent,
     },
@@ -56,7 +56,7 @@ const createStyles = (colors) => {
       width: '100%',
     },
     input: {
-      fontSize: 18,
+      fontSize: 20,
       flex: 1,
       color: colors.text,
     },

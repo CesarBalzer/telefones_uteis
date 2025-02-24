@@ -6,8 +6,8 @@ import CustomButton from '../../components/Buttons/CustomButton';
 import { ThemeContext } from '../../context/ThemeContext';
 import { colors } from '../../config/theme';
 
-let pinch = require('../../assets/animations/pinch.json');
-let swipe = require('../../assets/animations/swipe.json');
+import pinchAnimation from '../../assets/animations/pinch.json';
+import swipeAnimation from '../../assets/animations/swipe.json';
 
 const AnimatedLottieView = Animated.createAnimatedComponent(LottieView);
 
@@ -17,6 +17,42 @@ const InstructionModal = ({ onConfirm, buttonEnabled, setButtonEnabled }) => {
   const styles = createStyles(activeColors);
   const animationProgress = useRef(new Animated.Value(0)).current;
   const [currentAnimation, setCurrentAnimation] = useState('pinch');
+
+  // Modifica dinamicamente a cor da animação Lottie
+  const modifyAnimationColors = (animationJSON, newColor) => {
+    const updatedAnimation = JSON.parse(JSON.stringify(animationJSON)); // Clona o JSON
+
+    updatedAnimation.layers.forEach(layer => {
+      if (layer.shapes) {
+        layer.shapes.forEach(shape => {
+          if (shape.it) {
+            shape.it.forEach(item => {
+              if (item.ty === 'fl' || item.ty === 'st') {
+                item.c.k = [
+                  newColor[0] / 255, // R (Convertido de 0-255 para 0-1)
+                  newColor[1] / 255, // G
+                  newColor[2] / 255, // B
+                  1, // Alpha
+                ];
+              }
+            });
+          }
+        });
+      }
+    });
+
+    return updatedAnimation;
+  };
+
+  // Converte a accent color do tema para RGB
+  const hexToRgb = hex => {
+    const bigint = parseInt(hex.replace('#', ''), 16);
+    return [(bigint >> 16) & 255, (bigint >> 8) & 255, bigint & 255];
+  };
+
+  // Aplica a cor no JSON da animação
+  const pinch = modifyAnimationColors(pinchAnimation, hexToRgb(activeColors.danger));
+  const swipe = modifyAnimationColors(swipeAnimation, hexToRgb(activeColors.accent));
 
   useEffect(() => {
     startInstructionLoop();
@@ -56,8 +92,7 @@ const InstructionModal = ({ onConfirm, buttonEnabled, setButtonEnabled }) => {
         {currentAnimation === 'pinch' ? (
           <>
             <Text style={styles.instructionText}>
-              Use o gesto de pinça para ampliar e explorar o mapa e toque no
-              estado padrão.
+              Use o gesto de pinça para ampliar e explorar o mapa e toque no estado padrão.
             </Text>
             <AnimatedLottieView
               source={pinch}
@@ -68,8 +103,7 @@ const InstructionModal = ({ onConfirm, buttonEnabled, setButtonEnabled }) => {
         ) : (
           <>
             <Text style={styles.instructionText}>
-              Ou deslize para os lados na lista abaixo para escolher o estado
-              padrão.
+              Ou deslize para os lados na lista abaixo para escolher o estado padrão.
             </Text>
             <AnimatedLottieView
               source={swipe}
@@ -85,20 +119,14 @@ const InstructionModal = ({ onConfirm, buttonEnabled, setButtonEnabled }) => {
           size="large"
           shape="rounded"
           disabled={!buttonEnabled}
-          label={
-            buttonEnabled
-              ? 'Ok, vamos continuar!'
-              : 'Aguardando sincronização...'
-          }
+          label={buttonEnabled ? 'Ok, vamos continuar!' : 'Aguardando sincronização...'}
           onPress={onConfirm}
           iconPosition="right"
           icon={
             <Icon
               name="check"
               size={24}
-              color={
-                buttonEnabled ? activeColors.primary : activeColors.tertiary
-              }
+              color={buttonEnabled ? activeColors.primary : activeColors.tertiary}
             />
           }
         />
@@ -107,7 +135,7 @@ const InstructionModal = ({ onConfirm, buttonEnabled, setButtonEnabled }) => {
   );
 };
 
-const createStyles = (colors) =>
+const createStyles = colors =>
   StyleSheet.create({
     instructionsContainer: {
       flex: 1,
@@ -124,7 +152,6 @@ const createStyles = (colors) =>
       textAlign: 'center',
     },
     animationContainer: {
-      // flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
     },

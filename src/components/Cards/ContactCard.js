@@ -20,11 +20,6 @@ const ContactCard = ({ data, onEdit, onCall }) => {
     onEdit && onEdit(id);
   };
 
-  const isValidPhoneNumber = (phoneNumber) => {
-    const phoneRegex = /^\+?[1-9]\d{7,14}$/;
-    return phoneRegex.test(phoneNumber);
-  };
-
   const handleCall = async () => {
     const phoneNumber = validatePhoneNumber(data?.phoneNumbers?.[0]?.number);
     console.log('HANDLECALL => ', phoneNumber);

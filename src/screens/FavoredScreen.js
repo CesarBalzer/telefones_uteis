@@ -1,8 +1,8 @@
 import React from 'react';
 import FavoredsTabSection from '../components/Sections/FavoredsTabSection';
 
-const FavoredScreen = ({ route }) => {
-  return <FavoredsTabSection route={route} />;
+const FavoredScreen = () => {
+  return <FavoredsTabSection />;
 };
 
 export default FavoredScreen;

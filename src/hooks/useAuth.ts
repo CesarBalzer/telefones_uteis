@@ -13,7 +13,7 @@ export const useAuth = () => {
           setUser(JSON.parse(storedUser));
         }
       } catch (error) {
-        console.error('Erro ao carregar usuário:', error);
+        console.log('Erro ao carregar usuário:', error);
       } finally {
         setLoading(false);
       }

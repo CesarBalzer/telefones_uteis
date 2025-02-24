@@ -8,13 +8,22 @@ export class Auth extends Module {
     });
   }
 
-  register(params: {
+  register(data: any) {
+    return this.post('api/auth/register', data);
+  }
+
+  verificationCode(params: { email: string }) {
+    return this.post('api/auth/send-verification-code', params);
+  }
+
+  update(params: {
     name: string;
     email: string;
+    birthday: string;
     password: string;
     password_confirmation: string;
   }) {
-    return this.post('api/auth/register', params);
+    return this.post('api/me/update', params);
   }
 
   fetchFromAPI({

@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
-import SettingsScreen from '../screens/Settings';
+import SettingsScreen from '../screens/SettingsScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors } from '../config/theme';
 import { ThemeContext } from '../context/ThemeContext';
 import FavoredScreen from '../screens/FavoredScreen';
-import HomeScreen from '../screens/HomeScreen';
+import HomeScreen from '../screens/CountryScreen';
 import ContactsScreen from '../screens/ContactsScreen';
 import LocalScreen from '../screens/LocalScreen';
 

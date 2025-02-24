@@ -14,9 +14,9 @@ import { ThemeContext } from '../../context/ThemeContext';
 import InputField from '../Inputs/InputField';
 import SelectDropdownModal from '../Selects/SelectDropdownModal';
 import { getAssetIcons } from 'react-native-shortcut-custom';
-import { getCategories } from '../../db/CategoryService';
-import { getStates } from '../../db/StateService';
-import HeaderPhoneActions from './HeaderPhoneActions';
+import { getCategories } from '../../services/CategoryService';
+import { getStates } from '../../services/StateService';
+import HeaderPhoneActions from '../Headers/HeaderPhoneActions';
 
 const PhoneModal = ({ data, onConfirm, user }) => {
   const { theme } = useContext(ThemeContext);

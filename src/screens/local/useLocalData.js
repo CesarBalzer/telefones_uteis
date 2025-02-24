@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { getCategories } from '../../db/CategoryService';
-import { getStateById } from '../../db/StateService';
-import { getPhonesByStateId } from '../../db/PhoneService';
+import { getCategories } from '../../services/CategoryService';
+import { getStateById } from '../../services/StateService';
+import { getPhonesByStateId } from '../../services/PhoneService';
 import { UserContext } from '../../context/UserContext';
 
 export const useLocalData = () => {

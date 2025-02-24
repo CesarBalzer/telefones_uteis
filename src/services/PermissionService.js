@@ -21,7 +21,7 @@ const requestPermissions = async () => {
 
     return allGranted;
   } catch (error) {
-    console.error('Erro ao verificar permissões:', error);
+    console.log('Erro ao verificar permissões:', error);
     return false;
   }
 };

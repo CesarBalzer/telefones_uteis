@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
-import CategoryLocalCard from '../../components/Cards/CategoryLocalCard';
+import CardItem from '../../components/Cards/CardItem';
 
 const CategoryList = ({
   categories,
@@ -14,7 +14,7 @@ const CategoryList = ({
         data={categories}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <CategoryLocalCard
+          <CardItem
             title={item.name}
             onPress={() => handleCategoryPress(item)}
             isActive={item.id === selectedCategory?.id}

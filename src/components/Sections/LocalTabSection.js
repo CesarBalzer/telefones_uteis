@@ -1,7 +1,13 @@
-import React, { useRef, useState, useContext, useEffect } from 'react';
+import React, {
+  useRef,
+  useState,
+  useContext,
+  useEffect,
+  useCallback,
+} from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import CategoryLocalCard from '../Cards/CategoryLocalCard';
+import CardItem from '../Cards/CardItem';
 import LocalContent from '../Content/LocalContent';
 import { colors } from '../../config/theme';
 import { ThemeContext } from '../../context/ThemeContext';
@@ -11,18 +17,18 @@ import { useModal } from '../../context/ModalContext';
 import PhoneModal from '../Modals/PhoneModal';
 import { UserContext } from '../../context/UserContext';
 import { FlatList } from 'react-native-gesture-handler';
-import { getCategories } from '../../db/CategoryService';
-import { getStateById } from '../../db/StateService';
+import { getCategories } from '../../services/CategoryService';
+import { getStateById } from '../../services/StateService';
 import {
   updatePhone,
   getPhoneById,
   getPhonesByStateId,
   getContactsAndPhones,
-} from '../../db/PhoneService';
+} from '../../services/PhoneService';
 import { normalizeText } from '../../utils/Helpers';
 import LocalSearch from '../../screens/local/LocalSearch';
 
-const LocalTabSection = ({ route }) => {
+const LocalTabSection = () => {
   const { theme } = useContext(ThemeContext);
   const { user } = useContext(UserContext);
   let activeColors = colors[theme.mode];
@@ -43,28 +49,33 @@ const LocalTabSection = ({ route }) => {
   const navigate = useNavigation();
 
   useEffect(() => {
-    (async () => {
+    const loadData = async () => {
       setLoadingPhone(true);
-      const cats = await loadCategories();
-      const state = await loadState(user);
-      await loadPhonesByStateId(cats, state);
-      setLoadingPhone(false);
-    })();
+      try {
+        const cats = await loadCategories();
+        const state = await loadState(user);
+        await loadPhonesByStateId(cats, state);
+      } catch (error) {
+        console.log('❌ Erro ao carregar dados iniciais:', error);
+      } finally {
+        setLoadingPhone(false);
+      }
+    };
+    loadData();
   }, [user]);
 
-  const loadCategories = async () => {
+  const loadCategories = useCallback(async () => {
     const categs = await getCategories();
     if (categs && categs.length > 0) {
       setCategories(categs);
       setSelectedCategory(categs[0]);
     }
     return categs[0];
-  };
+  });
 
-  const loadState = async (usr) => {
+  const loadState = useCallback(async (usr) => {
     if (usr && usr.state_id) {
       const foundState = await getStateById(usr.state_id);
-      // console.log('FOUNDSTATE => ', foundState);
       setSelectedState(foundState);
       navigate.setOptions({
         title:
@@ -72,7 +83,7 @@ const LocalTabSection = ({ route }) => {
       });
       return foundState;
     }
-  };
+  });
 
   const loadPhonesByStateId = async (cats, state) => {
     try {
@@ -123,16 +134,12 @@ const LocalTabSection = ({ route }) => {
   };
 
   const handleReset = async () => {
-    // console.log('HANDLE RESET => ');
     setSearchText('');
     setLoadingPhone(true);
-    // setPhones([]);
     await loadPhonesByStateId(selectedCategory, {
       id: user.state_id,
     });
     setLoadingPhone(false);
-    // console.log('PHONS => ', phons);
-    // setPhones(phons);
   };
 
   const handleConfirm = async (item) => {
@@ -164,14 +171,14 @@ const LocalTabSection = ({ route }) => {
   });
 
   return (
-    <View>
+    <View style={{ backgroundColor: activeColors.secondary }}>
       <View style={styles.containerCardsCategories}>
         <FlatList
           horizontal
           showsHorizontalScrollIndicator={false}
           ref={categoriesScrollViewRef}
           renderItem={({ item, index }) => (
-            <CategoryLocalCard
+            <CardItem
               key={index}
               title={item.name}
               onPress={() => handleCategoryPress(item)}
@@ -185,11 +192,11 @@ const LocalTabSection = ({ route }) => {
         />
       </View>
 
-      <View style={{paddingBottom:15}}>
+      <View style={styles.containerSearch}>
         {loading ? (
-          <>
+          <View style={{ backgroundColor: activeColors.primary }}>
             <SkelletonInputSearch />
-          </>
+          </View>
         ) : (
           <LocalSearch
             value={searchText}
@@ -217,9 +224,13 @@ const createStyles = (colors) => {
       flex: 1,
       backgroundColor: colors.primary,
     },
+    containerSearch: {
+      backgroundColor: colors.primary,
+      paddingBottom: 10,
+    },
     containerCardsCategories: {
       paddingVertical: 5,
-      backgroundColor: `${colors.tint}35`,
+      backgroundColor: colors.primary,
     },
     sectionTitle: {
       marginTop: 25,

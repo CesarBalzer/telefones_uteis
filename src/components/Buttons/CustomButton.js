@@ -45,7 +45,7 @@ const CustomButton = ({
     >
       {loading ? (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="small" color={styles.primary} />
+          <ActivityIndicator size="small" color={activeColors.primary} />
         </View>
       ) : (
         <View style={[styles.content, { flexDirection }]}>
@@ -85,7 +85,7 @@ const createStyles = (colors, type, size, shape, disabled, isHorizontal) => {
       break;
     case 'info':
       backgroundColor = colors.info;
-      textColor = colors.secondary;
+      textColor = colors.light;
       break;
     case 'invert':
       backgroundColor = colors.light;

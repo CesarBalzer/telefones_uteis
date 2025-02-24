@@ -8,7 +8,7 @@ export const store = async (key, value) => {
     await AsyncStorage.setItem(generateKey(key), serialize(value));
     return true;
   } catch (e) {
-    console.error(e);
+    console.log(e);
     return false;
   }
 };
@@ -18,7 +18,7 @@ export const get = async (key) => {
     let raw = await AsyncStorage.getItem(generateKey(key));
     return unserialize(raw);
   } catch (e) {
-    console.error(e);
+    console.log(e);
     return null;
   }
 };
@@ -27,7 +27,7 @@ export const remove = async (key) => {
   try {
     return await AsyncStorage.removeItem(generateKey(key));
   } catch (e) {
-    console.error(e);
+    console.log(e);
     return false;
   }
 };
@@ -60,7 +60,7 @@ export const storeJson = async (key, value) => {
   try {
     await AsyncStorage.setItem(generateKey(key), JSON.stringify(value));
   } catch (e) {
-    console.error(e);
+    console.log(e);
     return false;
   }
 };
@@ -70,7 +70,7 @@ export const getJson = async (key) => {
     const jsonValue = await AsyncStorage.getItem(generateKey(key));
     return jsonValue != null ? JSON.parse(jsonValue) : null;
   } catch (e) {
-    console.error(e);
+    console.log(e);
     return false;
   }
 };
@@ -81,7 +81,7 @@ export const getAllKeys = async () => {
     keys = await AsyncStorage.getAllKeys();
     return keys;
   } catch (e) {
-    console.error(e);
+    console.log(e);
     return false;
   }
 };

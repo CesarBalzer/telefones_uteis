@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   LayoutAnimation,
   Platform,
@@ -9,6 +9,8 @@ import {
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { ThemeContext } from '../../context/ThemeContext';
+import { colors } from '../../config/theme';
 
 if (
   Platform.OS === 'android' &&
@@ -16,48 +18,59 @@ if (
 ) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
-const AccordionListItem = () => {
-  const [expanded, setExpanded] = useState(false);
+
+const Accordion = ({ title, children, opened = false }) => {
+  const { theme } = useContext(ThemeContext);
+  const activeColors = colors[theme.mode];
+  const styles = createStyles(activeColors);
+  const [expanded, setExpanded] = useState(opened);
+
+  const toggleExpand = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setExpanded(!expanded);
+  };
 
   return (
-    <View style={style.container}>
-      <TouchableOpacity
-        onPress={() => {
-          LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-          setExpanded(!expanded);
-        }}
-      >
+    <View style={styles.container}>
+      <TouchableOpacity onPress={toggleExpand} style={styles.header}>
         <Icon
-          name={'arrow-down-drop-circle-outline'}
-          size={30}
-          color={'yellowgreen'}
+          name={expanded ? 'close' : 'pencil'}
+          size={24}
+          color={activeColors.text}
         />
-        {/* <Text>Press me to {expanded ? 'collapse' : 'expand'}!</Text> */}
+        <Text style={styles.title}>{!expanded ? title : 'Fechar'}</Text>
       </TouchableOpacity>
-      {expanded && (
-        <View style={style.tile}>
-          <Text>I disappear sometimes!</Text>
-        </View>
-      )}
+      {expanded && <View style={styles.content}>{children}</View>}
     </View>
   );
 };
 
-const style = StyleSheet.create({
-  tile: {
-    backgroundColor: 'lightgrey',
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
-    padding: 20,
-  },
-  container: {
-    // flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'hidden',
-    // backgroundColor: 'red',
-    flexDirection: 'column',
-  },
-});
+const createStyles = (colors) =>
+  StyleSheet.create({
+    container: {
+      borderRadius: 8,
+      // backgroundColor:colors.primary,
+      marginBottom: 10,
+      overflow: 'hidden',
+    },
+    header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      padding: 15,
+      backgroundColor: colors.primary,
+    },
+    title: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: colors.accent,
+      marginHorizontal:10
+    },
+    content: {
+      paddingVertical: 15,
+      paddingHorizontal: 10,
+      // backgroundColor: '#fff',
+    },
+  });
 
-export default AccordionListItem;
+export default Accordion;

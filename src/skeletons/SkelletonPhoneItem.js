@@ -4,21 +4,24 @@ import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import { ThemeContext } from '../context/ThemeContext';
 import { colors } from '../config/theme';
 
-// import { Container } from './styles';
-
 const SkelletonPhoneItem = () => {
   const { theme } = useContext(ThemeContext);
   let activeColors = colors[theme.mode];
   return (
-    <View style={{marginTop:5}}>
-      <SkeletonPlaceholder borderRadius={4} flexDirection="row">
+    <View style={{ marginVertical: 5, backgroundColor: activeColors.primary }}>
+      <SkeletonPlaceholder
+        borderRadius={4}
+        flexDirection="row"
+        backgroundColor={activeColors.secondary}
+        highlightColor={activeColors.primary}
+      >
         <SkeletonPlaceholder.Item
           flexDirection="row"
           alignItems="center"
           marginTop={10}
           marginHorizontal={10}
           paddingVertical={8}
-          borderColor={'#333'}
+          borderColor={activeColors.primary}
           borderWidth={0.6}
           borderRadius={10}
         >

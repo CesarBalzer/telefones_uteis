@@ -1,5 +1,5 @@
 {
-  "name": "TelefonesUteis",
+  "name": "telefonesuteis",
   "version": "2.0.1",
   "private": true,
   "scripts": {
@@ -36,6 +36,7 @@
     "react-native-linear-gradient": "^2.8.3",
     "react-native-mask-input": "^1.2.3",
     "react-native-modal": "^13.0.1",
+    "react-native-navigation-bar-color": "^2.0.2",
     "react-native-pager-view": "^6.2.3",
     "react-native-paper": "^5.12.3",
     "react-native-progress": "^5.0.1",

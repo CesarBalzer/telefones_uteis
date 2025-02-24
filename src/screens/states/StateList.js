@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatList, StyleSheet } from 'react-native';
-import StateCard from './StateCard';
+import CardItem from '../../components/Cards/CardItem';
 
 const StateList = ({ states, selectedState, onStateSelect, scrollRef }) => {
   const getItemLayout = (data, index) => ({
@@ -17,7 +17,7 @@ const StateList = ({ states, selectedState, onStateSelect, scrollRef }) => {
       data={states}
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
-        <StateCard
+        <CardItem
           title={item.name}
           onPress={() => onStateSelect(item.id)}
           isActive={item.id === selectedState?.id}
